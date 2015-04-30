@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/yola/pixabayjs/issues"
   },
-  "homepage": "https://github.com/yola/pixabayjs#readme"
+  "homepage": "https://github.com/yola/pixabayjs#readme",
+  "devDependencies": {
+    "jsgreat": "^0.1.6",
+  }
 }
