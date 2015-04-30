@@ -1,0 +1,23 @@
+{
+  "name": "pixabayjs",
+  "version": "0.1.0",
+  "description": "Pixabay API client wrapper",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yola/pixabayjs.git"
+  },
+  "keywords": [
+    "Pixabay",
+    "client"
+  ],
+  "author": "Yola Engineering <engineering@yola.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yola/pixabayjs/issues"
+  },
+  "homepage": "https://github.com/yola/pixabayjs#readme"
+}
