@@ -5,7 +5,7 @@ A Javascript Wrapper for the Pixabay API. To learn more about Pixabay, read the 
 
 1. Install dependencies:
 
-`npm install`
+    `npm install`
 
 
 ## Testing
@@ -13,7 +13,7 @@ A Javascript Wrapper for the Pixabay API. To learn more about Pixabay, read the 
 
 1. Run tests:
 
-`npm test`
+    `npm test`
 
 ## Using Pixabayjs
 
