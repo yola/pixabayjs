@@ -65,13 +65,9 @@ Retriever.prototype._setQuery = function(query) {
 };
 
 Retriever.prototype._searchString = function() {
-  return _.reduce(this._search, function(searchStr, str) {
-    if (!_.isEmpty(searchStr)) {
-      return searchStr + '+' + encodeURIComponent(str);
-    } else {
-      return encodeURIComponent(str);
-    }
-  }, '');
+  return _.map(this._search, function(term) {
+    return _.escape(term);
+  }).join('+');
 };
 
 Retriever.prototype._urlObj = function() {
