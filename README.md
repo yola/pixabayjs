@@ -33,14 +33,12 @@ var requestPromise = pixabay
     .search(['dogs', 'puppies'])
     .get();
 
-// NOTE: Use `request.search([])` instead of `request.query` to set the `q` request parameter. When the request url is being generated, `request` takes the array set by `request.search`, urlencodes each element, and concatenates them together before setting the `q` request parameter.
-
 // Use the request promise
 request.then(...);
 
 ```
 
-Refer to Pixabay's API [documentation](http://pixabay.com/api/docs/) for the possible query parameters to use with `pixabay.defaults` and `request().query`.
+Refer to Pixabay's API [documentation](http://pixabay.com/api/docs/) for the possible query parameters to use with `pixabay.defaults` and `request().query`. **Note:** Use `request().search` specifically for pixabay's `q` request parameter; doing otherwise will cause the `q` parameter to be overwritten.
 
 ## License
 MIT
