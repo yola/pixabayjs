@@ -62,8 +62,7 @@ describe('pixabayjs', function() {
         .query(query)
         .get()
         .then(wrap(request, 'data'))
-        .then(notify(done))
-        .done();
+        .done(notify(done));
     });
 
     it('hits the api', function() {
