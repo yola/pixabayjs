@@ -29,8 +29,11 @@ pixabay.defaults({safesearch: 'true'});
 // Create a request promise
 var requestPromise = pixabay
     .request()
-    .query({q: 'dogs'})
+    .query({order: 'latest'})
+    .search(['dogs', 'puppies'])
     .get();
+
+// NOTE: Use `request.search([])` instead of `request.query` to set the `q` request parameter. When the request url is being generated, `request` takes the array set by `request.search`, urlencodes each element, and concatenates them together before setting the `q` request parameter.
 
 // Use the request promise
 request.then(...);

@@ -51,7 +51,7 @@ describe('pixabayjs', function() {
 
     before(function(done) {
       query = {
-        q: 'dog'
+        order: 'lastest'
       };
 
       client = Object.create(pixabay);
@@ -60,6 +60,7 @@ describe('pixabayjs', function() {
       client
         .request()
         .query(query)
+        .search(['dog', 'puppy'])
         .get()
         .then(wrap(request, 'data'))
         .done(notify(done));
@@ -70,7 +71,11 @@ describe('pixabayjs', function() {
     });
 
     it('sends the query parameters', function() {
-      var queries = _.assign(query, {username: username, key: key});
+      var queries = _.assign(query,
+        {username: username, key: key},
+        {q: 'dog+puppy'}
+      );
+
       expect(request.data.request.qs).to.eql(queries);
     });
 

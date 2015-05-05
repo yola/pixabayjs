@@ -11,6 +11,7 @@ function Retriever(options) {
   this._path = options.path || 'api';
   this._protocol = options.protocol || 'http';
   this._query = options.query || {};
+  this._search = options.search || [];
 }
 
 Retriever.prototype.defaults = function(defaults) {
@@ -49,6 +50,11 @@ Retriever.prototype.query = function(query) {
   return this;
 };
 
+Retriever.prototype.search = function(search) {
+  this._search = search;
+  return this;
+};
+
 Retriever.prototype.username = function(username) {
   this._setQuery({username: username});
   return this;
@@ -58,7 +64,19 @@ Retriever.prototype._setQuery = function(query) {
   _.assign(this._query, query);
 };
 
+Retriever.prototype._searchString = function() {
+  return _.reduce(this._search, function(searchStr, str) {
+    if (!_.isEmpty(searchStr)) {
+      return searchStr + '+' + encodeURIComponent(str);
+    } else {
+      return encodeURIComponent(str);
+    }
+  }, '');
+};
+
 Retriever.prototype._urlObj = function() {
+  this._setQuery({q: this._searchString()});
+
   return {
     hostname: this._host,
     pathname: this._path,
