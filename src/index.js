@@ -14,11 +14,10 @@ var pixabayjs = {
 
   request: function(options) {
     var request = new Retriever(options);
-    request
+    return request
       .username(this.username)
       .key(this.key)
       .defaults(this.defaults);
-    return request;
   }
 };
 
