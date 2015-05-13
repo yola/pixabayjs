@@ -32,7 +32,10 @@ Retriever.prototype.host = function(host) {
 };
 
 Retriever.prototype.key = function(key) {
-  this._setQuery({key: key});
+  if (key) {
+    this._setQuery({key: key});
+  }
+
   return this;
 };
 
@@ -56,7 +59,10 @@ Retriever.prototype.search = function(search) {
 };
 
 Retriever.prototype.username = function(username) {
-  this._setQuery({username: username});
+  if (username) {
+    this._setQuery({username: username});
+  }
+
   return this;
 };
 
