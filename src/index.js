@@ -3,7 +3,7 @@
 var Retriever = require('./retriever');
 
 var pixabayjs = {
-  authorize: function(username, key) {
+  authenticate: function(username, key) {
     this.username = username;
     this.key = key;
   },

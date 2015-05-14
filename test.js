@@ -29,9 +29,9 @@ describe('pixabayjs', function() {
     client = null;
   });
 
-  describe('authorize', function() {
+  describe('authenticate', function() {
     it('sets the client\'s username and key', function() {
-      client.authorize(username, key);
+      client.authenticate(username, key);
       expect(client.username).to.equal(username);
       expect(client.key).to.equal(key);
     });
@@ -55,7 +55,7 @@ describe('pixabayjs', function() {
       };
 
       client = Object.create(pixabay);
-      client.authorize(username, key);
+      client.authenticate(username, key);
 
       client
         .request()
