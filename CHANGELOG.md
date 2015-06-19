@@ -1,5 +1,9 @@
 # [Changelog](https://github.com/yola/pixabayjs/releases)
 
+## 0.2.1
+* Removed lodash dependencies where possible ([#4][4])
+[4]: https://github.com/yola/pixabayjs/pull/4
+
 ## 0.2.0
 * Authorization credentials are optional ([#3][3])
 * Renamed `authorize` to `authenticate`
