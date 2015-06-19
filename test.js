@@ -1,6 +1,6 @@
 'use strict';
 
-var _ = require('lodash');
+var assign = require('lodash.assign');
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
 var config = require('./config.json');
@@ -71,7 +71,7 @@ describe('pixabayjs', function() {
     });
 
     it('sends the query parameters', function() {
-      var queries = _.assign(query,
+      var queries = assign(query,
         {username: username, key: key},
         {q: 'dog+puppy'}
       );

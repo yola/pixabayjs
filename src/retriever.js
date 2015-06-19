@@ -1,6 +1,6 @@
 'use strict';
 
-var _ = require('lodash');
+var assign = require('lodash.assign');
 var request = require('superagent');
 var q = require('q');
 var url = require('url');
@@ -67,12 +67,12 @@ Retriever.prototype.username = function(username) {
 };
 
 Retriever.prototype._setQuery = function(query) {
-  _.assign(this._query, query);
+  assign(this._query, query);
 };
 
 Retriever.prototype._searchString = function() {
-  return _.map(this._search, function(term) {
-    return _.escape(term);
+  return this._search.map(function(term) {
+    return encodeURIComponent(term);
   }).join('+');
 };
 
