@@ -129,6 +129,10 @@ describe('pixabayjs', function() {
       it('sets lastPage to false when there are no more pages', function() {
         expect(request.lastPage).to.be.true;
       });
+
+      it('errors when calling next when there is no more pages', function() {
+        expect(request.next).to.throw(Error);
+      });
     });
   });
 });
