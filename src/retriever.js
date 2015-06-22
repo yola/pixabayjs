@@ -9,7 +9,7 @@ function Retriever(options) {
   options = options || {};
   this._host = options.host || 'pixabay.com';
   this._path = options.path || 'api';
-  this._protocol = options.protocol || 'http';
+  this._protocol = options.protocol || 'https';
   this._query = options.query || {};
   this._search = options.search || [];
 }

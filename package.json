@@ -37,6 +37,7 @@
     "superagent": ">= 1 < 2"
   },
   "dependencies": {
-    "lodash.assign": "^3.2.0"
+    "lodash.assign": "^3.2.0",
+    "lodash.uniq": "^3.2.1"
   }
 }

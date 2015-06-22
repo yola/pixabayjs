@@ -1,5 +1,6 @@
 'use strict';
 
+var Handler = require('./handler');
 var Retriever = require('./retriever');
 
 var pixabayjs = {
@@ -13,11 +14,13 @@ var pixabayjs = {
   },
 
   request: function(options) {
-    var request = new Retriever(options);
-    return request
+    var retriever = new Retriever(options);
+    retriever
       .username(this.username)
       .key(this.key)
       .defaults(this.defaults);
+
+    return new Handler(retriever);
   }
 };
 

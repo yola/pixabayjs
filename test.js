@@ -111,11 +111,24 @@ describe('pixabayjs', function() {
       expect(request.hits).to.be.length(20);
     });
 
-      expect(request.data.request.qs).to.eql(queries);
+    it('knows that there are more pages', function() {
+      expect(request.lastPage).to.be.false;
     });
 
-    it('receives hits', function() {
-      expect(request.data.body.totalHits).to.be.at.least(1);
+    describe('pagination', function() {
+      before(function(done) {
+        request
+          .next()
+          .done(notify(done));
+      });
+
+      it('receives the next set of hits', function() {
+        expect(request.hits).to.be.length(25);
+      });
+
+      it('sets lastPage to false when there are no more pages', function() {
+        expect(request.lastPage).to.be.true;
+      });
     });
   });
 });
