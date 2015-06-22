@@ -18,10 +18,12 @@ Handler.prototype._handleResponse = function(response) {
   this._fetched = true;
 
   this.response = response;
-  this.data = response.body;
-  this.hits = uniq(this.hits.concat(this.data.hits));
+  var data = response.body;
 
-  var totalHits = this.data.totalHits;
+  this.totalHits = data.totalHits;
+  this.hits = uniq(this.hits.concat(data.hits));
+
+  var totalHits = data.totalHits;
   var per_page = this._retriever._query.per_page || 20;
   this._totalPages = Math.ceil(totalHits / per_page);
 

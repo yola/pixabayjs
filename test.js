@@ -107,7 +107,7 @@ describe('pixabayjs', function() {
     });
 
     it('receives hits', function() {
-      expect(request.data.totalHits).to.equal(25);
+      expect(request.totalHits).to.equal(25);
       expect(request.hits).to.be.length(20);
     });
 
