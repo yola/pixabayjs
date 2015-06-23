@@ -26,15 +26,27 @@ pixabay.authenticate('username', 'api_key');
 // Set default query parameters to make with every request
 pixabay.defaults({safesearch: 'true'});
 
-// Create a request promise
-var requestPromise = pixabay
+// Create a request handler
+var handler = pixabay
     .request()
     .query({order: 'latest'})
-    .search(['dogs', 'puppies'])
-    .get();
+    .search(['dogs', 'puppies']);
+
+// Get the request promise
+var request = handler.get();
 
 // Use the request promise
-request.then(...);
+request
+    .then(...)
+    .done();
+
+// Get the next set of results
+var request2 = handler.next();
+
+// Get a specific page
+handler.page(3);
+var request3 = hander.get();
+
 
 ```
 
