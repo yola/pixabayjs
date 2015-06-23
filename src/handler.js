@@ -3,10 +3,9 @@
 var uniq = require('lodash.uniq');
 
 function Handler(retriever) {
-  this._currentRequest = null;
   this._fetched = false;
   this._page = 1;
-  this._requested = false;
+  this._initRequest = false;
   this._retriever = retriever;
   this._totalPages = 1;
   this.hits = [];
@@ -14,18 +13,14 @@ function Handler(retriever) {
 }
 
 Handler.prototype._handleResponse = function(response) {
-  this._currentRequest = null;
-  this._fetched = true;
-
   this.response = response;
   var data = response.body;
 
   this.totalHits = data.totalHits;
   this.hits = uniq(this.hits.concat(data.hits));
 
-  var totalHits = data.totalHits;
   var per_page = this._retriever._query.per_page || 20;
-  this._totalPages = Math.ceil(totalHits / per_page);
+  this._totalPages = Math.ceil(this.totalHits / per_page);
 
   if (this._page === this._totalPages) {
     this.lastPage = true;
@@ -35,12 +30,8 @@ Handler.prototype._handleResponse = function(response) {
 };
 
 Handler.prototype.next = function() {
-  if (!this._requested) {
+  if (!this._initRequest) {
     throw new Error('No initial request has been made');
-  }
-
-  if (!this._fetched) {
-    return this._currentRequest;
   }
 
   if (this.lastPage) {
@@ -50,8 +41,7 @@ Handler.prototype.next = function() {
   this._page += 1;
   this.page(this._page);
 
-  var request = this.get();
-  return request;
+  return this.get();
 };
 
 Handler.prototype.page = function(page) {
@@ -73,16 +63,9 @@ Handler.prototype.search = function(search) {
 };
 
 Handler.prototype.get = function() {
-  if (this._currentRequest) {
-    return this._currentRequest;
-  }
-
-  this._fetched = false;
-  this._requested = true;
-  this._currentRequest = this._retriever.get()
+  this._initRequest = true;
+  return this._retriever.get()
     .then(this._handleResponse.bind(this));
-
-  return this._currentRequest;
 };
 
 module.exports = Handler;

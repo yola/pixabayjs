@@ -88,9 +88,7 @@ describe('pixabayjs', function() {
       client = Object.create(pixabay);
       client.authenticate(username, key);
 
-      request = client
-        .request();
-
+      request = client.request();
 
       request.query(query)
         .search(['dog', 'puppy'])
@@ -131,7 +129,10 @@ describe('pixabayjs', function() {
       });
 
       it('errors when calling next when there is no more pages', function() {
-        expect(request.next).to.throw(Error);
+        var testFn = function() {
+          request.next();
+        };
+        expect(testFn).to.throw('Last page has been retrieved');
       });
     });
   });
