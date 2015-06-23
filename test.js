@@ -2,11 +2,10 @@
 
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
-var fill = require('lodash.fill');
 var mockagent = require('mockagent');
 var pixabay = require('./src/index');
 var promiseHelpers = require('promisehelpers');
-var querystring = require('querystring');
+var range = require('lodash.range');
 var superagent = require('superagent');
 var url = require('url');
 
@@ -56,22 +55,14 @@ describe('pixabayjs', function() {
     before(function(done) {
       mockagent.target(superagent);
 
-      mockagent.url(pixabayUrl, function(res) {
-        var query = url.parse(this.url).query;
-        var queryParams = querystring.parse(query);
+      mockagent.get(pixabayUrl, function(res) {
+        var query = url.parse(this.url, true).query;
 
-        var firstPage = queryParams.page !== '2';
-        var emptyArr =  firstPage ? new Array(20) : new Array(5);
-        fill(emptyArr, 1);
-
-        var hits = emptyArr.map(function(v, i) {
-          var offset = firstPage ? 0 : 20;
-          return offset + i + 1;
-        });
-
+        // query.page is not set on initial request--api defaults to 1
+        var firstPage = !query.page;
+        var hits =  firstPage ? range(0, 20) : range(20, 25);
 
         var response = {
-          status: 200,
           body: {
             totalHits: 25,
             hits: hits
@@ -98,10 +89,6 @@ describe('pixabayjs', function() {
 
     after(function() {
       mockagent.releaseTarget();
-    });
-
-    it('hits the api', function() {
-      expect(request.response.status).to.equal(200);
     });
 
     it('receives hits', function() {
