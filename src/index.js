@@ -1,7 +1,7 @@
 'use strict';
 
-var Handler = require('./handler');
 var Retriever = require('./retriever');
+var RequestFactory = require('./request-factory');
 
 var pixabayjs = {
   authenticate: function(username, key) {
@@ -13,14 +13,14 @@ var pixabayjs = {
     this.defaults = defaults;
   },
 
-  request: function(options) {
+  requestFactory: function(options) {
     var retriever = new Retriever(options);
     retriever
       .username(this.username)
       .key(this.key)
       .defaults(this.defaults);
 
-    return new Handler(retriever);
+    return new RequestFactory(retriever);
   }
 };
 

@@ -10,6 +10,7 @@ var superagent = require('superagent');
 var url = require('url');
 
 var notify = promiseHelpers.notify;
+var wrap = promiseHelpers.wrap;
 
 var expect = chai.expect;
 chai.use(chaiAsPromised);
@@ -19,6 +20,36 @@ var username = 'username';
 var key = 'key';
 
 var pixabayUrl = 'https://pixabay.com/api/';
+
+var mockResponse = function() {
+  mockagent.target(superagent);
+
+  mockagent.get(pixabayUrl, function(res) {
+    var query = url.parse(this.url, true).query;
+
+    var hits = [];
+
+    if (query.page === '1') {
+      hits = range(0, 20);
+    } else if (query.page === '2') {
+      hits = range(20, 25);
+    }
+
+    var response = {
+      request: {
+        qs: {
+          page: query.page
+        }
+      },
+      body: {
+        totalHits: 25,
+        hits: hits
+      }
+    };
+
+    return response;
+  });
+};
 
 describe('pixabayjs', function() {
   this.timeout(30000);
@@ -48,29 +79,16 @@ describe('pixabayjs', function() {
     });
   });
 
-  describe('request', function() {
-    var request = {};
+  describe('requestFactory', function() {
+    var response1 = {};
+    var response2 = {};
+    var response3 = {};
+    var requestFactory = {};
+    var listFactory = {};
     var query;
 
     before(function(done) {
-      mockagent.target(superagent);
-
-      mockagent.get(pixabayUrl, function(res) {
-        var query = url.parse(this.url, true).query;
-
-        // query.page is not set on initial request--api defaults to 1
-        var firstPage = !query.page;
-        var hits =  firstPage ? range(0, 20) : range(20, 25);
-
-        var response = {
-          body: {
-            totalHits: 25,
-            hits: hits
-          }
-        };
-
-        return response;
-      });
+      mockResponse();
 
       query = {
         order: 'lastest'
@@ -79,11 +97,16 @@ describe('pixabayjs', function() {
       client = Object.create(pixabay);
       client.authenticate(username, key);
 
-      request = client.request();
+      requestFactory = client.requestFactory();
 
-      request.query(query)
-        .search(['dog', 'puppy'])
-        .get()
+      listFactory = requestFactory
+        .query(query)
+        .search(['dogs', 'puppies'])
+        .listFactory();
+
+      listFactory
+        .next()
+        .then(wrap(response1, 'data'))
         .done(notify(done));
     });
 
@@ -91,35 +114,36 @@ describe('pixabayjs', function() {
       mockagent.releaseTarget();
     });
 
-    it('receives hits', function() {
-      expect(request.totalHits).to.equal(25);
-      expect(request.hits).to.be.length(20);
+    describe('first request', function() {
+      it('receives hits', function() {
+        expect(response1.data.body.totalHits).to.equal(25);
+        expect(response1.data.body.hits).to.be.length(20);
+      });
     });
 
-    it('knows that there are more pages', function() {
-      expect(request.lastPage).to.be.false;
-    });
-
-    describe('pagination', function() {
+    describe('second request', function() {
       before(function(done) {
-        request
+        listFactory
           .next()
+          .then(wrap(response2, 'data'))
           .done(notify(done));
       });
 
       it('receives the next set of hits', function() {
-        expect(request.hits).to.be.length(25);
+        expect(response2.data.body.hits).to.be.length(5);
+      });
+    });
+
+    describe('third request', function() {
+      before(function(done) {
+        listFactory
+          .next()
+          .then(wrap(response3, 'data'))
+          .done(notify(done));
       });
 
-      it('sets lastPage to false when there are no more pages', function() {
-        expect(request.lastPage).to.be.true;
-      });
-
-      it('errors when calling next when there is no more pages', function() {
-        var testFn = function() {
-          request.next();
-        };
-        expect(testFn).to.throw('Last page has been retrieved');
+      it('returns an empty array of hits', function() {
+        expect(response3.data.body.hits).to.be.empty;
       });
     });
   });
