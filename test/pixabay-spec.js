@@ -37,7 +37,6 @@ var mockResponse = function() {
 
     var noError = !!hits.length;
 
-
     var error =  'ERROR: "page"/"per_page" is out of valid range.';
 
     var response = {

@@ -2,17 +2,17 @@
 
 var ResponseHandler = require('./response-handler');
 
-function ListFactory(retriever, spec) {
+function ListFactory(retriever, options) {
   if (!retriever) {
     throw new Error('Expected Retriever as an argument');
   }
 
-  spec || (spec = {});
+  options || (options = {});
 
   this._retriever = retriever;
-  this._page = spec.page || 1;
-  this._onSuccess = spec.onSuccess;
-  this._onFailure = spec.onFailure;
+  this._onFailure = options.onFailure;
+  this._onSuccess = options.onSuccess;
+  this._page = options.page || 1;
 }
 
 ListFactory.prototype.next = function() {
