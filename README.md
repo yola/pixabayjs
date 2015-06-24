@@ -9,8 +9,6 @@ A Javascript Wrapper for the Pixabay API. To learn more about Pixabay, read the 
 
 
 ## Testing
-1. Create a `config.json` file using `config.json.example` as a template. You will need a valid username and api_key.
-
 1. Run tests:
 
     `npm test`
