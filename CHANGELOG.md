@@ -1,5 +1,9 @@
 # [Changelog](https://github.com/yola/pixabayjs/releases)
 
+## 0.3.1
+* Updates to README ([#11][11])
+[11] https://github.com/yola/pixabayjs/pull/11
+
 ## 0.3.0
 * Refactor of API to support pagination ([#8][8])
     * `request` is now `requestFactory` and returns a `RequestFactory` object.
