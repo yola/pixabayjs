@@ -1,6 +1,6 @@
 'use strict';
 
-var ResponseHandler = require('./request-handler');
+var ResponseHandler = require('./response-handler');
 
 function ListFactory(retriever, spec) {
   if (!retriever) {
@@ -11,7 +11,8 @@ function ListFactory(retriever, spec) {
 
   this._retriever = retriever;
   this._page = spec.page || 1;
-  this._cb = spec.cb;
+  this._onSuccess = spec.onSuccess;
+  this._onFailure = spec.onFailure;
 }
 
 ListFactory.prototype.next = function() {
@@ -23,12 +24,18 @@ ListFactory.prototype.next = function() {
 ListFactory.prototype._get = function() {
   return this._retriever
     .get()
-    .then(this._handleResponse.bind(this));
+    .then(this._handleSuccess.bind(this))
+    .fail(this._handleFailure.bind(this));
 };
 
-ListFactory.prototype._handleResponse = function(res) {
-  var resHandler = new ResponseHandler(res, this._cb);
-  return resHandler.handle();
+ListFactory.prototype._handleSuccess = function(res) {
+  var resHandler = new ResponseHandler(res, this._page - 1, this._onSuccess);
+  return resHandler.success();
+};
+
+ListFactory.prototype._handleFailure = function(res) {
+  var resHandler = new ResponseHandler(res, this._page - 1, this._onFailure);
+  return resHandler.failure();
 };
 
 module.exports = ListFactory;
