@@ -39,8 +39,6 @@ var resultsPromise = resultList.next();
 var resultsPromise2 = resultList.next();
 ```
 
-Refer to Pixabay's API [documentation][docs] for the possible query parameters to use with `pixabay.defaults` and `request().query`. **Note:** Use `request().search` specifically for pixabay's `q` request parameter; doing otherwise will cause the `q` parameter to be overwritten.
-
 ## API
 ### `pixabay`
 The high level client wrapper used set authentication, set default query parameters, and create `RequestFactory`s.
