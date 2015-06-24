@@ -43,7 +43,6 @@
     "superagent": ">= 1 < 2"
   },
   "dependencies": {
-    "lodash.assign": "^3.2.0",
-    "lodash.bind": "^3.1.0"
+    "lodash.assign": "^3.2.0"
   }
 }

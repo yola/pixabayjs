@@ -1,6 +1,5 @@
 'use strict';
 
-var bind = require('lodash.bind');
 var ResponseHandler = require('./response-handler');
 
 function ResultList(retriever, options) {
@@ -25,8 +24,8 @@ ResultList.prototype.next = function() {
 ResultList.prototype._get = function(page) {
   return this._retriever
     .get()
-    .then(bind(this._handleSuccess, this, page))
-    .fail(bind(this._handleFailure, this, page));
+    .then(this._handleSuccess.bind(this, page))
+    .fail(this._handleFailure.bind(this, page));
 };
 
 ResultList.prototype._handleSuccess = function(page, res) {
