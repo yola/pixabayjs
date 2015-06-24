@@ -27,16 +27,16 @@ pixabay.defaults({safesearch: 'true'});
 var requestFactory = pixabay.requestFactory();
 
 // Configure the RequestFactory, using Pixabay's query parameters
-var listFactory = requestFactory    
+var resultList = requestFactory    
     .query({order: 'latest'})
     .search(['dogs', 'puppies'])
-    .listFactory();
+    .resultList();
 
 // Get a promise for a page of results
-var resultsPromise = listFactory.next();
+var resultsPromise = resultList.next();
 
 // Get a promise for the next page of results
-var resultsPromise2 = listFactory.next();
+var resultsPromise2 = resultList.next();
 ```
 
 Refer to Pixabay's API [documentation][docs] for the possible query parameters to use with `pixabay.defaults` and `request().query`. **Note:** Use `request().search` specifically for pixabay's `q` request parameter; doing otherwise will cause the `q` parameter to be overwritten.
@@ -70,8 +70,8 @@ Used to set the query parameters sent with the Pixabay request. See the [documen
 #### `RequestFactory.search([arr]`
 Used to set an array of terms to search for. The array is converted into a query string before making the request.
 
-#### `RequestFactory.listFactory({options})`
-Returns a `ListFactory` object.
+#### `RequestFactory.resultList({options})`
+Returns a `ResultList` object.
 
 Options are:
 - `onFailure`: an optional callback that is invoked when a request errors out.
@@ -81,11 +81,11 @@ Options are:
 ##### Callbacks
 The callbacks should take a `response` argument, which is the processed response from the request. See below for what the `response` object looks like.
 
-### `ListFactory`
+### `ResultList`
 A generator that makes requests to Pixabay and returns a promise for each.
 
-#### `ListFactory.next()`
-Returns a promise for the next page of results. Normally begins with the first page, but the initial page can be set by setting the `page` key in the `options` passed into `RequestFactory.listFactory({options})`.
+#### `ResultList.next()`
+Returns a promise for the next page of results. Normally begins with the first page, but the initial page can be set by setting the `page` key in the `options` passed into `RequestFactory.resultList({options})`.
 
 ### Pixabay Results
 By default, a response will be in the following form:

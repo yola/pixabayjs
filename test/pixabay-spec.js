@@ -86,7 +86,7 @@ describe('pixabayjs', function() {
     var response2 = {};
     var response3 = {};
     var requestFactory = {};
-    var listFactory = {};
+    var resultList = {};
     var query;
 
     before(function(done) {
@@ -101,12 +101,12 @@ describe('pixabayjs', function() {
 
       requestFactory = client.requestFactory();
 
-      listFactory = requestFactory
+      resultList = requestFactory
         .query(query)
         .search(['dogs', 'puppies'])
-        .listFactory();
+        .resultList();
 
-      listFactory
+      resultList
         .next()
         .then(wrap(response1, 'data'))
         .done(notify(done));
@@ -127,7 +127,7 @@ describe('pixabayjs', function() {
 
     describe('second request', function() {
       before(function(done) {
-        listFactory
+        resultList
           .next()
           .then(wrap(response2, 'data'))
           .done(notify(done));
@@ -141,7 +141,7 @@ describe('pixabayjs', function() {
 
     describe('third request', function() {
       before(function(done) {
-        listFactory
+        resultList
           .next()
           .then(wrap(response3, 'data'))
           .done(notify(done));

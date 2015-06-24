@@ -1,13 +1,13 @@
 'use strict';
 
-var ListFactory = require('./list-factory');
+var ResultList = require('./result-list');
 
 function RequestFactory(retriever) {
   this._retriever = retriever;
 }
 
-RequestFactory.prototype.listFactory = function(options) {
-  return new ListFactory(this._retriever, options);
+RequestFactory.prototype.resultList = function(options) {
+  return new ResultList(this._retriever, options);
 };
 
 RequestFactory.prototype.query = function(obj) {
