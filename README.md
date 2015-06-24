@@ -26,7 +26,7 @@ pixabay.defaults({safesearch: 'true'});
 // Create a RequestFactory
 var requestFactory = pixabay.requestFactory();
 
-// Configure the RequestFactory, using Pixabay's query parameters*
+// Configure the RequestFactory, using Pixabay's query parameters
 var listFactory = requestFactory    
     .query({order: 'latest'})
     .search(['dogs', 'puppies'])
@@ -39,7 +39,7 @@ var resultsPromise = listFactory.next();
 var resultsPromise2 = listFactory.next();
 ```
 
-*Refer to Pixabay's API [documentation][docs] for the possible query parameters to use with `pixabay.defaults` and `request().query`. **Note:** Use `request().search` specifically for pixabay's `q` request parameter; doing otherwise will cause the `q` parameter to be overwritten.
+Refer to Pixabay's API [documentation][docs] for the possible query parameters to use with `pixabay.defaults` and `request().query`. **Note:** Use `request().search` specifically for pixabay's `q` request parameter; doing otherwise will cause the `q` parameter to be overwritten.
 
 ## API
 ### `pixabay`
