@@ -64,6 +64,9 @@ Options are:
 ### `RequestFactory`
 An object used to configure a request to Pixabay.
 
+#### `RequestFactory.get({options})`
+Syntatical sugar for `RequestFactory.resultList(options).next()`. See `RequestFactory.resultList()` and `ResultList.next()` for further information.
+
 #### `RequestFactory.query({obj})`
 Used to set the query parameters sent with the Pixabay request. See the [documentation][docs] for a list of supported query parameters. **Note::** Use `RequestFactory.search()` specifically for the `q` query parameter; doing otherwise will cause your search string to be overwritten.
 

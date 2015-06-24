@@ -82,6 +82,42 @@ describe('pixabayjs', function() {
   });
 
   describe('requestFactory', function() {
+    var response = {};
+    var query;
+
+    before(function(done) {
+      mockResponse();
+
+      query = {
+        order: 'lastest'
+      };
+
+      client = Object.create(pixabay);
+      client.authenticate(username, key);
+
+      var requestFactory = client.requestFactory();
+
+      requestFactory
+        .query(query)
+        .search(['dogs', 'puppies'])
+        .get()
+        .then(wrap(response, 'data'))
+        .done(notify(done));
+    });
+
+    after(function() {
+     mockagent.releaseTarget();
+    });
+
+    it('receives the response when calling get', function() {
+      expect(response.data.totalHits).to.equal(25);
+      expect(response.data.hits).to.be.length(20);
+      expect(response.data.page).to.be.equal(1);
+      expect(response.data.error).to.be.null;
+    });
+  });
+
+  describe('ResultList', function() {
     var response1 = {};
     var response2 = {};
     var response3 = {};

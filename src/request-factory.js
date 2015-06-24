@@ -6,6 +6,10 @@ function RequestFactory(retriever) {
   this._retriever = retriever;
 }
 
+RequestFactory.prototype.get = function(options) {
+  return this.resultList(options).next();
+};
+
 RequestFactory.prototype.resultList = function(options) {
   return new ResultList(this._retriever, options);
 };
