@@ -3,7 +3,7 @@
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
 var mockagent = require('mockagent');
-var pixabay = require('./src/index');
+var pixabay = require('../src/index');
 var promiseHelpers = require('promisehelpers');
 var range = require('lodash.range');
 var superagent = require('superagent');
@@ -19,7 +19,7 @@ chai.should();
 var username = 'username';
 var key = 'key';
 
-var pixabayUrl = 'https://pixabay.com/api/';
+var pixabayUrl = 'https://pixabay.com/api';
 
 var mockResponse = function() {
   mockagent.target(superagent);
@@ -35,19 +35,22 @@ var mockResponse = function() {
       hits = range(20, 25);
     }
 
+    var noError = !!hits.length;
+
+
+    var error =  'ERROR: "page"/"per_page" is out of valid range.';
+
     var response = {
-      request: {
-        qs: {
-          page: query.page
-        }
-      },
-      body: {
-        totalHits: 25,
-        hits: hits
-      }
+      totalHits: noError ? 25 : undefined,
+      hits: noError ? hits : undefined,
+      error: noError ? null : error
     };
 
-    return response;
+    res.xhr = {
+      status: noError ? 200 : 400,
+      responseText: JSON.stringify(noError ? response : error)
+    };
+    return res;
   });
 };
 
@@ -111,13 +114,15 @@ describe('pixabayjs', function() {
     });
 
     after(function() {
-      mockagent.releaseTarget();
+     mockagent.releaseTarget();
     });
 
     describe('first request', function() {
       it('receives hits', function() {
-        expect(response1.data.body.totalHits).to.equal(25);
-        expect(response1.data.body.hits).to.be.length(20);
+        expect(response1.data.totalHits).to.equal(25);
+        expect(response1.data.hits).to.be.length(20);
+        expect(response1.data.page).to.be.equal(1);
+        expect(response1.data.error).to.be.null;
       });
     });
 
@@ -130,7 +135,8 @@ describe('pixabayjs', function() {
       });
 
       it('receives the next set of hits', function() {
-        expect(response2.data.body.hits).to.be.length(5);
+        expect(response2.data.hits).to.be.length(5);
+        expect(response2.data.page).to.be.equal(2);
       });
     });
 
@@ -143,7 +149,9 @@ describe('pixabayjs', function() {
       });
 
       it('returns an empty array of hits', function() {
-        expect(response3.data.body.hits).to.be.empty;
+        var errorRgx = /ERROR: "page"\/"per_page" is out of valid range\./;
+        expect(response3.data.hits).to.be.empty;
+        expect(response3.data.error).to.match(errorRgx);
       });
     });
   });

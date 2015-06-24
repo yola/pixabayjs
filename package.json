@@ -4,7 +4,7 @@
   "description": "Pixabay API client wrapper",
   "main": "src/index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "karma start"
   },
   "repository": {
     "type": "git",
@@ -21,13 +21,19 @@
   },
   "homepage": "https://github.com/yola/pixabayjs#readme",
   "devDependencies": {
+    "bindpolyfill": "0.0.0",
     "chai": "^2.3.0",
     "chai-as-promised": "^5.0.0",
     "jsgreat": "^0.1.6",
+    "karma": "^0.12.37",
+    "karma-browserify": "^4.2.1",
+    "karma-mocha": "^0.2.0",
+    "karma-phantomjs-launcher": "^0.2.0",
+    "karma-spec-reporter": "0.0.19",
     "lodash.range": "^3.0.0",
     "mocha": "^2.2.4",
     "mockagent": "^0.1.4",
-    "phantomjs": "^1.9.16",
+    "phantomjs": "^1.9.17",
     "promisehelpers": "0.0.3",
     "q": "^1.3.0",
     "superagent": "^1.2.0"
@@ -37,7 +43,6 @@
     "superagent": ">= 1 < 2"
   },
   "dependencies": {
-    "lodash.assign": "^3.2.0",
-    "lodash.uniq": "^3.2.1"
+    "lodash.assign": "^3.2.0"
   }
 }
