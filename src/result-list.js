@@ -1,6 +1,9 @@
 'use strict';
 
+var bind = require('lodash.bind');
 var ResponseHandler = require('./response-handler');
+
+bind.placeholder = '_';
 
 function ResultList(retriever, options) {
   if (!retriever) {
@@ -18,23 +21,23 @@ function ResultList(retriever, options) {
 ResultList.prototype.next = function() {
   this._retriever.query({page: this._page});
   this._page += 1;
-  return this._get();
+  return this._get(this._page - 1);
 };
 
-ResultList.prototype._get = function() {
+ResultList.prototype._get = function(page) {
   return this._retriever
     .get()
-    .then(this._handleSuccess.bind(this))
-    .fail(this._handleFailure.bind(this));
+    .then(bind(this._handleSuccess, this, '_', page))
+    .fail(bind(this._handleFailure, this, '_', page));
 };
 
-ResultList.prototype._handleSuccess = function(res) {
-  var resHandler = new ResponseHandler(res, this._page - 1, this._onSuccess);
+ResultList.prototype._handleSuccess = function(res, page) {
+  var resHandler = new ResponseHandler(res, page, this._onSuccess);
   return resHandler.success();
 };
 
-ResultList.prototype._handleFailure = function(res) {
-  var resHandler = new ResponseHandler(res, this._page - 1, this._onFailure);
+ResultList.prototype._handleFailure = function(res, page) {
+  var resHandler = new ResponseHandler(res, page, this._onFailure);
   return resHandler.failure();
 };
 
