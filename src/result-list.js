@@ -3,8 +3,6 @@
 var bind = require('lodash.bind');
 var ResponseHandler = require('./response-handler');
 
-bind.placeholder = '_';
-
 function ResultList(retriever, options) {
   if (!retriever) {
     throw new Error('Expected Retriever as an argument');
@@ -27,16 +25,16 @@ ResultList.prototype.next = function() {
 ResultList.prototype._get = function(page) {
   return this._retriever
     .get()
-    .then(bind(this._handleSuccess, this, '_', page))
-    .fail(bind(this._handleFailure, this, '_', page));
+    .then(bind(this._handleSuccess, this, page))
+    .fail(bind(this._handleFailure, this, page));
 };
 
-ResultList.prototype._handleSuccess = function(res, page) {
+ResultList.prototype._handleSuccess = function(page, res) {
   var resHandler = new ResponseHandler(res, page, this._onSuccess);
   return resHandler.success();
 };
 
-ResultList.prototype._handleFailure = function(res, page) {
+ResultList.prototype._handleFailure = function(page, res) {
   var resHandler = new ResponseHandler(res, page, this._onFailure);
   return resHandler.failure();
 };
