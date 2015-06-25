@@ -21,7 +21,7 @@ var username = 'username';
 var key = 'key';
 
 var pixabayUrl = 'https://pixabay.com/api';
-var proxyPath = '/pixabay/api';
+var proxyURL = '/pixabay/api';
 
 var mockResponse = function(targetURL) {
   mockagent.target(superagent);
@@ -90,7 +90,7 @@ describe('pixabayjs', function() {
     var query;
 
     before(function() {
-      mockResponse(proxyPath);
+      mockResponse(proxyURL);
       query = {
         order: 'lastest'
       };
@@ -98,7 +98,7 @@ describe('pixabayjs', function() {
       client = Object.create(pixabay);
       client.authenticate(username, key);
 
-      requestFactory = client.requestFactory({path: proxyPath});
+      requestFactory = client.requestFactory({url: proxyURL});
 
       resultList = requestFactory
         .query(query)

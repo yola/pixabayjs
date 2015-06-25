@@ -8,7 +8,7 @@ var url = require('url');
 function Retriever(options) {
   options = options || {};
 
-  this._path = options.path || 'https://pixabay.com/api';
+  this._path = options.url || 'https://pixabay.com/api';
   this._query = options.query || {};
   this._search = options.search || [];
 }
