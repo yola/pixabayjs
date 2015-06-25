@@ -24,7 +24,7 @@ ResponseHandler.prototype.failure = function() {
   var error = JSON.parse(this.res.response.xhr.responseText);
   var data = {
     error: error,
-    page: null,
+    page: this.page,
     hits: [],
     totalHits: null
   };

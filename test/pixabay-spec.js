@@ -156,7 +156,7 @@ describe('pixabayjs', function() {
       it('receives hits', function() {
         expect(response1.data.totalHits).to.equal(25);
         expect(response1.data.hits).to.be.length(20);
-        expect(response1.data.page).to.be.equal(1);
+        expect(response1.data.page).to.equal(1);
         expect(response1.data.error).to.be.null;
       });
     });
@@ -171,7 +171,7 @@ describe('pixabayjs', function() {
 
       it('receives the next set of hits', function() {
         expect(response2.data.hits).to.be.length(5);
-        expect(response2.data.page).to.be.equal(2);
+        expect(response2.data.page).to.equal(2);
       });
     });
 
@@ -183,9 +183,16 @@ describe('pixabayjs', function() {
           .done(notify(done));
       });
 
+      it('reports the page requested', function() {
+        expect(response3.data.page).to.equal(3);
+      });
+
       it('returns an empty array of hits', function() {
-        var errorRgx = /ERROR: "page"\/"per_page" is out of valid range\./;
         expect(response3.data.hits).to.be.empty;
+      });
+
+      it('returns an error', function() {
+        var errorRgx = /ERROR: "page"\/"per_page" is out of valid range\./;
         expect(response3.data.error).to.match(errorRgx);
       });
     });

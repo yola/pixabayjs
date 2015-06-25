@@ -119,7 +119,7 @@ By default, a response will be in the following form:
 }
 ```
 
-The `error` and `page` keys are set by Pixabayjs for convenience. When an error occurs, `error` will be set to the error's text, both `page` and `totalHits` will be `null`, and `hits` will be an empty array.
+The `error` and `page` keys are set by Pixabayjs for convenience. When an error occurs, `error` will be set to the error's text, `page` will contain the requested page, `totalHits` will be `null`, and `hits` will be an empty array.
 
 ## License
 MIT
