@@ -127,10 +127,7 @@ The `error` and `page` keys are set by Pixabayjs for convenience. When an error 
 ## License
 MIT
 
-<<<<<<< HEAD
-[travis-image]: https://travis-ci.org/yola/pixabayjs.svg?branch=master
-[travis-url]: https://travis-ci.org/yola/pixabayjs
-=======
 [docs]: http://pixabay.com/api/docs/
 [registration]: https://pixabay.com/en/accounts/register/
->>>>>>> master
+[travis-image]: https://travis-ci.org/yola/pixabayjs.svg?branch=master
+[travis-url]: https://travis-ci.org/yola/pixabayjs
