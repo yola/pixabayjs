@@ -28,7 +28,8 @@ ResponseHandler.prototype.failure = function() {
     error: error,
     page: this.page,
     hits: [],
-    totalHits: null
+    totalHits: null,
+    totalPages: null
   };
 
   return q(this.cb(data));
