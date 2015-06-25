@@ -6,6 +6,7 @@ var mockagent = require('mockagent');
 var pixabay = require('../src/index');
 var promiseHelpers = require('promisehelpers');
 var range = require('lodash.range');
+var ResultList = require('../src/result-list');
 var superagent = require('superagent');
 var url = require('url');
 
@@ -82,12 +83,12 @@ describe('pixabayjs', function() {
   });
 
   describe('requestFactory', function() {
-    var response = {};
+    var requestFactory;
+    var resultList;
     var query;
 
-    before(function(done) {
+    before(function() {
       mockResponse();
-
       query = {
         order: 'lastest'
       };
@@ -95,25 +96,31 @@ describe('pixabayjs', function() {
       client = Object.create(pixabay);
       client.authenticate(username, key);
 
-      var requestFactory = client.requestFactory();
+      requestFactory = client.requestFactory();
 
-      requestFactory
+      resultList = requestFactory
         .query(query)
         .search(['dogs', 'puppies'])
-        .get()
-        .then(wrap(response, 'data'))
-        .done(notify(done));
+        .resultList();
     });
 
     after(function() {
-     mockagent.releaseTarget();
+      mockagent.releaseTarget();
     });
 
-    it('receives the response when calling get', function() {
-      expect(response.data.totalHits).to.equal(25);
-      expect(response.data.hits).to.be.length(20);
-      expect(response.data.page).to.be.equal(1);
-      expect(response.data.error).to.be.null;
+    it('returns a ResultList when calling `resultList`', function() {
+      expect(resultList).to.be.instanceof(ResultList);
+    });
+
+    it('returns results when calling `get`', function(done) {
+      var results = Object.create(requestFactory);
+
+      results
+        .get()
+        .then(function(res) {
+          expect(res.hits).to.have.length(20);
+        })
+        .done(notify(done));
     });
   });
 
@@ -149,14 +156,27 @@ describe('pixabayjs', function() {
     });
 
     after(function() {
-     mockagent.releaseTarget();
+      mockagent.releaseTarget();
     });
 
     describe('first request', function() {
-      it('receives hits', function() {
-        expect(response1.data.totalHits).to.equal(25);
-        expect(response1.data.hits).to.be.length(20);
+      it('receives the first page', function() {
         expect(response1.data.page).to.equal(1);
+      });
+
+      it('receives the hits', function() {
+        expect(response1.data.hits).to.be.length(20);
+      });
+
+      it('receives the totalHits', function() {
+        expect(response1.data.totalHits).to.equal(25);
+      });
+
+      it('receives the totalPages', function() {
+        expect(response1.data.totalPages).to.equal(2);
+      });
+
+      it('receives a null error', function() {
         expect(response1.data.error).to.be.null;
       });
     });
