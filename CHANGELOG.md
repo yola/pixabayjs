@@ -1,9 +1,5 @@
 # [Changelog](https://github.com/yola/pixabayjs/releases)
 
-## 0.3.2
-* Set the requested page on the response when the request errors ([#13][13])
-[13] https://github.com/yola/pixabayjs/pull/13
-
 ## 0.3.1
 * Updates to README ([#11][11])
 [11] https://github.com/yola/pixabayjs/pull/11
