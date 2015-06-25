@@ -57,10 +57,7 @@ Use `defaults` to set default query parameters for each created `RequestFactory`
 Returns a `RequestFactory` instance using the authentication credentials and defaults priviously set.
 
 Options are:
-- `host`: defaults to `pixabay.com`.
-- `path`: defaults to `api`.
-- `protocol`: defaults to `https`.
-- `relativePath`: overrides `host`, `path`, and `protocol`. Useful for proxies.
+- `url`: defaults to `https://www.pixabay.com/api`
 - `query`: defaults to `{}`. An alternative to `RequestFactory.query()`.
 - `search`: defaults to `[]`. An alternative to `RequestFactory.search()`.
 

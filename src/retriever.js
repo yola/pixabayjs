@@ -8,14 +8,7 @@ var url = require('url');
 function Retriever(options) {
   options = options || {};
 
-  if (options.relativePath) {
-    this._path = options.relativePath;
-  } else {
-    this._host = options.host || 'pixabay.com';
-    this._path = options.path || 'api';
-    this._protocol = options.protocol || 'https';
-  }
-
+  this._path = options.path || 'https://pixabay.com/api';
   this._query = options.query || {};
   this._search = options.search || [];
 }
@@ -85,12 +78,10 @@ Retriever.prototype._searchString = function() {
 Retriever.prototype._urlObj = function() {
   this._setQuery({q: this._searchString()});
 
-  return {
-    hostname: this._host,
-    pathname: this._path,
-    protocol: this._protocol,
-    query: this._query
-  };
+  var urlObj = url.parse(this._path);
+  urlObj.query = this._query;
+
+  return urlObj;
 };
 
 Retriever.prototype._url = function() {
