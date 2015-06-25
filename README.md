@@ -1,4 +1,7 @@
 # pixabayjs
+
+[![build status][travis-image]][travis-url]
+
 A Javascript Wrapper for the Pixabay API. To learn more about Pixabay, read the [docs][docs].
 
 ## Setup
@@ -126,3 +129,5 @@ MIT
 
 [docs]: http://pixabay.com/api/docs/
 [registration]: https://pixabay.com/en/accounts/register/
+[travis-image]: https://travis-ci.org/yola/pixabayjs.svg?branch=master
+[travis-url]: https://travis-ci.org/yola/pixabayjs
