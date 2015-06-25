@@ -4,19 +4,10 @@
 
 A Javascript Wrapper for the Pixabay API. To learn more about Pixabay, read the [docs][docs].
 
-## Setup
+## Installation
+`npm i pixabayjs`
 
-1. Install dependencies:
-
-    `npm install`
-
-## Testing
-1. Run tests:
-
-    `npm test`
-
-## Using Pixabayjs
-
+## Example Usage
 ```javascript
 var pixabay = require('pixabayjs');
 
@@ -41,6 +32,16 @@ var resultsPromise = resultList.next();
 // Get a promise for the next page of results
 var resultsPromise2 = resultList.next();
 ```
+
+## Development
+
+1. Install dependencies:
+
+    `npm install`
+
+1. Run tests:
+
+    `npm test`
 
 ## API
 ### `pixabay`
@@ -118,11 +119,12 @@ By default, a response will be in the following form:
            user: 'WikiImages'
        },
     ],
-    totalHits: 199
+    totalHits: 199,
+    totalPages: 4
 }
 ```
 
-The `error` and `page` keys are set by Pixabayjs for convenience. When an error occurs, `error` will be set to the error's text, both `page` and `totalHits` will be `null`, and `hits` will be an empty array.
+The `error` and `page` keys are set by Pixabayjs for convenience. When an error occurs, `error` will be set to the error's text, `page` will contain the requested page, `totalHits` and `totalPages` will be `null`, and `hits` will be an empty array.
 
 ## License
 MIT
