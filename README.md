@@ -60,6 +60,7 @@ Options are:
 - `host`: defaults to `pixabay.com`.
 - `path`: defaults to `api`.
 - `protocol`: defaults to `https`.
+- `relativePath`: overrides `host`, `path`, and `protocol`. Useful for proxies.
 - `query`: defaults to `{}`. An alternative to `RequestFactory.query()`.
 - `search`: defaults to `[]`. An alternative to `RequestFactory.search()`.
 
