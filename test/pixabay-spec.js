@@ -129,9 +129,15 @@ describe('pixabayjs', function() {
   });
 
   describe('ResultList', function() {
+    var noop = function(res) {
+      return res;
+    };
+
     var requestFactory = {};
     var resultList;
     var query;
+    var cbSuccess = sinon.spy(noop);
+    var cbFailure = sinon.spy(noop);
 
     before(function() {
       mockResponse(pixabayUrl);
@@ -148,7 +154,7 @@ describe('pixabayjs', function() {
       resultList = requestFactory
         .query(query)
         .search(['dogs', 'puppies'])
-        .resultList();
+        .resultList({onSuccess: cbSuccess, onFailure: cbFailure});
     });
 
     after(function() {
@@ -183,6 +189,10 @@ describe('pixabayjs', function() {
 
       it('receives a null error', function() {
         expect(response.data.error).to.be.null;
+      });
+
+      it('called the success callback', function() {
+        expect(cbSuccess).to.be.called;
       });
     });
 
@@ -284,6 +294,10 @@ describe('pixabayjs', function() {
       it('returns an error', function() {
         var errorRgx = /ERROR: "page"\/"per_page" is out of valid range\./;
         expect(response.data.error).to.match(errorRgx);
+      });
+
+      it('called the failure callback', function() {
+        expect(cbFailure).to.be.called;
       });
     });
   });
