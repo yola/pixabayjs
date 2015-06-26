@@ -7,6 +7,8 @@ var pixabay = require('../src/index');
 var promiseHelpers = require('promisehelpers');
 var range = require('lodash.range');
 var ResultList = require('../src/result-list');
+var sinon = require('sinon');
+var sinonChai = require('sinon-chai');
 var superagent = require('superagent');
 var url = require('url');
 
@@ -15,7 +17,7 @@ var wrap = promiseHelpers.wrap;
 
 var expect = chai.expect;
 chai.use(chaiAsPromised);
-chai.should();
+chai.use(sinonChai);
 
 var username = 'username';
 var key = 'key';
@@ -127,14 +129,11 @@ describe('pixabayjs', function() {
   });
 
   describe('ResultList', function() {
-    var response1 = {};
-    var response2 = {};
-    var response3 = {};
     var requestFactory = {};
-    var resultList = {};
+    var resultList;
     var query;
 
-    before(function(done) {
+    before(function() {
       mockResponse(pixabayUrl);
 
       query = {
@@ -150,72 +149,141 @@ describe('pixabayjs', function() {
         .query(query)
         .search(['dogs', 'puppies'])
         .resultList();
-
-      resultList
-        .next()
-        .then(wrap(response1, 'data'))
-        .done(notify(done));
     });
 
     after(function() {
       mockagent.releaseTarget();
     });
 
-    describe('first request', function() {
-      it('receives the first page', function() {
-        expect(response1.data.page).to.equal(1);
-      });
+    describe('initial request for page 1', function() {
+      var response = {};
 
-      it('receives the hits', function() {
-        expect(response1.data.hits).to.be.length(20);
-      });
-
-      it('receives the totalHits', function() {
-        expect(response1.data.totalHits).to.equal(25);
-      });
-
-      it('receives the totalPages', function() {
-        expect(response1.data.totalPages).to.equal(2);
-      });
-
-      it('receives a null error', function() {
-        expect(response1.data.error).to.be.null;
-      });
-    });
-
-    describe('second request', function() {
       before(function(done) {
         resultList
           .next()
-          .then(wrap(response2, 'data'))
+          .then(wrap(response, 'data'))
+          .done(notify(done));
+      });
+
+      it('receives the first page', function() {
+        expect(response.data.page).to.equal(1);
+      });
+
+      it('receives the hits', function() {
+        expect(response.data.hits).to.be.length(20);
+      });
+
+      it('receives the totalHits', function() {
+        expect(response.data.totalHits).to.equal(25);
+      });
+
+      it('receives the totalPages', function() {
+        expect(response.data.totalPages).to.equal(2);
+      });
+
+      it('receives a null error', function() {
+        expect(response.data.error).to.be.null;
+      });
+    });
+
+    describe('previous() on page 1', function() {
+      it('throws an error when there is no previous page', function() {
+        var test = function() {
+          resultList.previous();
+        };
+
+        expect(test).to.throw('There is no previous page');
+      });
+    });
+
+    describe('next() on page 1', function() {
+      var response = {};
+
+      before(function(done) {
+        resultList
+          .next()
+          .then(wrap(response, 'data'))
           .done(notify(done));
       });
 
       it('receives the next set of hits', function() {
-        expect(response2.data.hits).to.be.length(5);
-        expect(response2.data.page).to.equal(2);
+        expect(response.data.hits).to.be.length(5);
+        expect(response.data.page).to.equal(2);
       });
     });
 
-    describe('third request', function() {
+    describe('previous() on page 2', function() {
+      var response = {};
+      var _get;
+
+      before(function(done) {
+        _get = sinon.spy(ResultList.prototype, '_get');
+
+        resultList
+          .previous()
+          .then(wrap(response, 'data'))
+          .done(notify(done));
+      });
+
+      after(function() {
+        _get.restore();
+      });
+
+      it('receives the page 1 response', function() {
+        expect(response.data.page).to.equal(1);
+      });
+
+      it('did not make a request', function() {
+        expect(_get).to.not.be.called;
+      });
+    });
+
+    describe('second next() on page 1', function() {
+      var response = {};
+      var _get;
+
+      before(function(done) {
+        _get = sinon.spy(ResultList.prototype, '_get');
+        resultList
+          .next()
+          .then(wrap(response, 'data'))
+          .done(notify(done));
+      });
+
+      after(function() {
+        _get.restore();
+      });
+
+      it('receives the page 2 response', function() {
+        expect(response.data.page).to.equal(2);
+      });
+
+      it('does not make a request', function() {
+        expect(_get).to.not.be.called;
+      });
+    });
+
+    describe('next() on page 2', function() {
+      var response = {};
+
       before(function(done) {
         resultList
           .next()
-          .then(wrap(response3, 'data'))
+          .then(wrap(response, 'data'))
           .done(notify(done));
       });
 
       it('reports the page requested', function() {
-        expect(response3.data.page).to.equal(3);
+        expect(response.data.page).to.equal(3);
       });
 
       it('returns an empty array of hits', function() {
-        expect(response3.data.hits).to.be.empty;
+        expect(response.data.hits).to.be.empty;
       });
 
       it('returns an error', function() {
         var errorRgx = /ERROR: "page"\/"per_page" is out of valid range\./;
-        expect(response3.data.error).to.match(errorRgx);
+        expect(response.data.error).to.match(errorRgx);
       });
     });
   });

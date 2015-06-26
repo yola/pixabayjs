@@ -35,14 +35,12 @@
     "mockagent": "^0.1.4",
     "phantomjs": "^1.9.17",
     "promisehelpers": "0.0.3",
-    "q": "^1.3.0",
-    "superagent": "^1.2.0"
-  },
-  "peerDependencies": {
-    "q": ">= 1 < 2",
-    "superagent": ">= 1 < 2"
+    "sinon": "^1.15.3",
+    "sinon-chai": "^2.8.0"
   },
   "dependencies": {
-    "lodash.assign": "^3.2.0"
+    "lodash.assign": "^3.2.0",
+    "q": "^1.4.1",
+    "superagent": "^1.2.0"
   }
 }
