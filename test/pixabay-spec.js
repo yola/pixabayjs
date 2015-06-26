@@ -23,11 +23,12 @@ var username = 'username';
 var key = 'key';
 
 var pixabayUrl = 'https://pixabay.com/api';
+var proxyURL = '/pixabay/api';
 
-var mockResponse = function() {
+var mockResponse = function(targetURL) {
   mockagent.target(superagent);
 
-  mockagent.get(pixabayUrl, function(res) {
+  mockagent.get(targetURL, function(res) {
     var query = url.parse(this.url, true).query;
 
     var hits = [];
@@ -52,6 +53,7 @@ var mockResponse = function() {
       status: noError ? 200 : 400,
       responseText: JSON.stringify(noError ? response : error)
     };
+
     return res;
   });
 };
@@ -90,7 +92,7 @@ describe('pixabayjs', function() {
     var query;
 
     before(function() {
-      mockResponse();
+      mockResponse(proxyURL);
       query = {
         order: 'lastest'
       };
@@ -98,7 +100,7 @@ describe('pixabayjs', function() {
       client = Object.create(pixabay);
       client.authenticate(username, key);
 
-      requestFactory = client.requestFactory();
+      requestFactory = client.requestFactory({url: proxyURL});
 
       resultList = requestFactory
         .query(query)
@@ -132,7 +134,7 @@ describe('pixabayjs', function() {
     var query;
 
     before(function() {
-      mockResponse();
+      mockResponse(pixabayUrl);
 
       query = {
         order: 'lastest'
