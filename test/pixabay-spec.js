@@ -186,10 +186,10 @@ describe('pixabayjs', function() {
       });
     });
 
-    describe('prev() on page 1', function() {
+    describe('previous() on page 1', function() {
       it('throws an error when there is no previous page', function() {
         var test = function() {
-          resultList.prev();
+          resultList.previous();
         };
 
         expect(test).to.throw('There is no previous page');
@@ -212,7 +212,7 @@ describe('pixabayjs', function() {
       });
     });
 
-    describe('prev() on page 2', function() {
+    describe('previous() on page 2', function() {
       var response = {};
       var _get;
 
@@ -220,7 +220,7 @@ describe('pixabayjs', function() {
         _get = sinon.spy(ResultList.prototype, '_get');
 
         resultList
-          .prev()
+          .previous()
           .then(wrap(response, 'data'))
           .done(notify(done));
       });

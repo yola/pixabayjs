@@ -24,14 +24,15 @@ ResultList.prototype.next = function() {
 
   this._retriever.query({page: this._page});
 
-  var promise = this._requestPromises[this._page] ?
-    this._requestPromises[this._page] : this._get();
+  if (this._requestPromises[this._page]) {
+    return this._requestPromises[this._page];
+  }
 
-  return promise;
+  return this._get();
 };
 
-ResultList.prototype.prev = function() {
-  if (this._page === 1) {
+ResultList.prototype.previous = function() {
+  if (this._page <= 1) {
     throw new Error('There is no previous page');
   }
 

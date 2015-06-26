@@ -90,6 +90,9 @@ A generator that makes requests to Pixabay and returns a promise for each.
 #### `ResultList.next()`
 Returns a promise for the next page of results. Normally begins with the first page, but the initial page can be set by setting the `page` key in the `options` passed into `RequestFactory.resultList({options})`.
 
+#### `ResultList.previous()`
+Returns a promose for the previous page of results. Will throw an error when requesting pages numbered <= 1;
+
 ### Pixabay Results
 By default, a response will be in the following form:
 
