@@ -8,7 +8,7 @@ var url = require('url');
 function Retriever(options) {
   options = options || {};
 
-  this._path = options.url || 'https://pixabay.com/api';
+  this._url = options.url || 'https://pixabay.com/api';
   this._query = options.query || {};
   this._search = options.search || [];
 }
@@ -19,15 +19,10 @@ Retriever.prototype.defaults = function(defaults) {
 };
 
 Retriever.prototype.get = function() {
-  return this._url()
+  return this._urlPromise()
     .then(request.get.bind(request))
     .invoke('accept', 'application/json')
     .ninvoke('end');
-};
-
-Retriever.prototype.host = function(host) {
-  this._host = host;
-  return this;
 };
 
 Retriever.prototype.key = function(key) {
@@ -38,13 +33,9 @@ Retriever.prototype.key = function(key) {
   return this;
 };
 
-Retriever.prototype.path = function(path) {
-  this._path = path;
+Retriever.prototype.url = function(url) {
+  this._url = url;
   return this;
-};
-
-Retriever.prototype.protocol = function(protocol) {
-  this._protocol = protocol;
 };
 
 Retriever.prototype.query = function(query) {
@@ -78,13 +69,13 @@ Retriever.prototype._searchString = function() {
 Retriever.prototype._urlObj = function() {
   this._setQuery({q: this._searchString()});
 
-  var urlObj = url.parse(this._path);
+  var urlObj = url.parse(this._url);
   urlObj.query = this._query;
 
   return urlObj;
 };
 
-Retriever.prototype._url = function() {
+Retriever.prototype._urlPromise = function() {
   return q(url.format(this._urlObj()));
 };
 
