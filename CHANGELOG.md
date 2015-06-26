@@ -1,8 +1,16 @@
 # [Changelog](https://github.com/yola/pixabayjs/releases)
 
+## 0.4.0
+* Added `previous` function to `ResultList`. Comes with promise caching ([#15][15])
+* Replace `host`, `protocol`, and `path` options with `url` for RequestFactory ([#14][14])
+* Set the requested page on the response when the request errors ([#13][13])
+[13]: https://github.com/yola/pixabayjs/pull/13
+[14]: https://github.com/yola/pixabayjs/pull/14
+[15]: https://github.com/yola/pixabayjs/pull/15
+
 ## 0.3.1
 * Updates to README ([#11][11])
-[11] https://github.com/yola/pixabayjs/pull/11
+[11]: https://github.com/yola/pixabayjs/pull/11
 
 ## 0.3.0
 * Refactor of API to support pagination ([#8][8])
