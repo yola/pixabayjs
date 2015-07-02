@@ -3,50 +3,48 @@
 var ResponseHandler = require('./response-handler');
 var retrieve = require('./retrieve');
 
-function ResultList(config, onSuccess, onFailure) {
-  if (!config.page || config.page < 1) {
-    config.page = 1;
-  }
 
-  this._config = config;
+function ResultList(search, options, onSuccess, onFailure) {
   this._onFailure = onFailure;
   this._onSuccess = onSuccess;
+  this._options = options;
   this._requestPromises = [];
+  this._search = search;
 
   // first call of next will increment to desired page
-  this._config.page -= 1;
+  this._options.page -= 1;
 }
 
 ResultList.prototype.next = function() {
-  this._config.page += 1;
+  var nextPage = this._options.page += 1;
 
-  if (this._requestPromises[this._config.page]) {
-    return this._requestPromises[this._config.page];
+  if (this._requestPromises[nextPage]) {
+    return this._requestPromises[nextPage];
   }
 
   return this._get();
 };
 
 ResultList.prototype.previous = function() {
-  if (this._config.page <= 1) {
+  if (this._options.page <= 1) {
     throw new Error('There is no previous page');
   }
 
-  this._config.page -= 1;
+  var previousPage = this._options.page -= 1;
 
-  if (this._requestPromises[this._config.page]) {
-    return this._requestPromises[this._config.page];
+  if (this._requestPromises[previousPage]) {
+    return this._requestPromises[previousPage];
   }
 
   return this._get();
 };
 
 ResultList.prototype._get = function() {
-  var promise =  retrieve(this._config)
+  var promise =  retrieve(this._search, this._options)
     .then(this._handleSuccess.bind(this, this._page, this._perPage))
     .fail(this._handleFailure.bind(this, this._page, this._perPage));
 
-  this._requestPromises[this._page] = promise;
+  this._requestPromises[this._options.page] = promise;
   return promise;
 };
 

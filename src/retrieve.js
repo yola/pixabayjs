@@ -20,9 +20,9 @@ var urlPromise = function(query, urlStr, search) {
   return q(url.format(urlObj));
 };
 
-module.exports = function(config) {
-  var query = omit(config, ['url', 'search']);
-  return urlPromise(query, config.url, config.search)
+module.exports = function(search, options) {
+  var query = omit(options, 'url');
+  return urlPromise(query, options.url, search)
     .then(request.get.bind(request))
     .invoke('accept', 'application/json')
     .ninvoke('end');
