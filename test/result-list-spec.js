@@ -61,10 +61,13 @@ var mockResponse = function() {
 
 describe('ResultList', function() {
   var baseConfig = {
-    search: ['dogs', 'puppies'],
-    url: pixabayUrl,
-    safesearch: true
+    page: 1,
+    per_page: 20,
+    safesearch: true,
+    url: 'https://pixabay.com/api'
   };
+
+  var search = ['dogs', 'puppies'];
 
   var noop = function(res) {
     return res;
@@ -87,8 +90,7 @@ describe('ResultList', function() {
 
     before(function(done) {
       var config = Object.create(baseConfig);
-
-      resultList = pixabay.resultList(config, cbSuccess, cbFailure);
+      resultList = pixabay.resultList(search, config, cbSuccess, cbFailure);
       resultList
         .next()
         .then(wrap(response, 'data'))
@@ -130,7 +132,7 @@ describe('ResultList', function() {
     before(function(done) {
       var config = Object.create(baseConfig);
 
-      resultList = pixabay.resultList(config, cbSuccess, cbFailure);
+      resultList = pixabay.resultList(search, config, cbSuccess, cbFailure);
       resultList
         .next()
         .then(wrap(response, 'data'))
@@ -156,7 +158,7 @@ describe('ResultList', function() {
     before(function(done) {
       var config = Object.create(baseConfig);
 
-      resultList = pixabay.resultList(config, cbSuccess, cbFailure);
+      resultList = pixabay.resultList(search, config, cbSuccess, cbFailure);
       resultList.next();
       resultList
         .next()
@@ -181,7 +183,7 @@ describe('ResultList', function() {
     before(function(done) {
       var config = Object.create(baseConfig);
 
-      resultList = pixabay.resultList(config, cbSuccess, cbFailure);
+      resultList = pixabay.resultList(search, config, cbSuccess, cbFailure);
       resultList.next();
       resultList.next();
 
@@ -214,7 +216,7 @@ describe('ResultList', function() {
     before(function(done) {
       var config = Object.create(baseConfig);
 
-      resultList = pixabay.resultList(config, cbSuccess, cbFailure);
+      resultList = pixabay.resultList(search, config, cbSuccess, cbFailure);
       resultList.next();
       resultList.next();
       resultList.previous();
@@ -247,7 +249,7 @@ describe('ResultList', function() {
     before(function(done) {
       var config = Object.create(baseConfig);
 
-      resultList = pixabay.resultList(config, cbSuccess, cbFailure);
+      resultList = pixabay.resultList(search, config, cbSuccess, cbFailure);
       resultList.next();
       resultList.next();
       resultList
