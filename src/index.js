@@ -1,31 +1,36 @@
 'use strict';
 
-var configFactory = require('./config-factory');
+var assign = require('lodash.assign');
 var ResultList = require('./result-list');
 
+var defaults = {
+  page: 1,
+  per_page: 20,
+  safesearch: true,
+  url: 'https://pixabay.com/api'
+};
+
 var pixabayjs = {
+  _auth: {},
+
   authenticate: function(username, key) {
-    this.username = username;
-    this.key = key;
+    this._auth.username = username;
+    this._auth.key = key;
   },
 
-  defaults: {},
-
-  makeConfig: function(search, options) {
-    var config = {
-      username: this.username,
-      key: this.key,
-      defaults: this.defaults,
-      search: search,
-      options: options
-    };
-
-    return configFactory(config);
-  },
-
-  resultList: function(config, onSuccess, onFailure) {
-    return new ResultList(config, onSuccess, onFailure);
+  resultList: function(search, options, onSuccess, onFailure) {
+    var config = assign(this.defaults, this._auth, options);
+    return new ResultList(search, config, onSuccess, onFailure);
   }
 };
+
+Object.defineProperty(pixabayjs, 'defaults', {
+  get: function() {
+    return defaults;
+  },
+  set: function(value) {
+    defaults = assign(defaults, value);
+  }
+});
 
 module.exports = pixabayjs;

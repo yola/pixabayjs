@@ -3,52 +3,50 @@
 var ResponseHandler = require('./response-handler');
 var retrieve = require('./retrieve');
 
-function ResultList(config, onSuccess, onFailure) {
-  if (!config.page || config.page < 1) {
-    config.page = 1;
-  }
 
-  config.per_page || (config.per_page = 20);
-
-  this._config = config;
-  this._onFailure = onFailure;
+function ResultList(search, options, onSuccess, onFailure) {
+  this._search = search;
+  this._options = options;
   this._onSuccess = onSuccess;
+  this._onFailure = onFailure;
   this._requestPromises = [];
 
   // first call of next will increment to desired page
-  this._config.page -= 1;
+  this._options.page -= 1;
 }
 
 ResultList.prototype.next = function() {
-  this._config.page += 1;
+  var nextPage = this._options.page += 1;
 
-  if (this._requestPromises[this._config.page]) {
-    return this._requestPromises[this._config.page];
+  if (this._requestPromises[nextPage]) {
+    return this._requestPromises[nextPage];
   }
 
   return this._get();
 };
 
 ResultList.prototype.previous = function() {
-  if (this._config.page <= 1) {
+  if (this._options.page <= 1) {
     throw new Error('There is no previous page');
   }
 
-  this._config.page -= 1;
+  var previousPage = this._options.page -= 1;
 
-  if (this._requestPromises[this._config.page]) {
-    return this._requestPromises[this._config.page];
+  if (this._requestPromises[previousPage]) {
+    return this._requestPromises[previousPage];
   }
 
   return this._get();
 };
 
 ResultList.prototype._get = function() {
-  var promise =  retrieve(this._config)
-    .then(this._success.bind(this, this._config.page, this._config.per_page))
-    .fail(this._failure.bind(this, this._config.page, this._config.per_page));
+  var page = this._options.page;
+  var perPage = this._options.per_page;
+  var promise =  retrieve(this._search, this._options)
+    .then(this._success.bind(this, page, perPage))
+    .fail(this._failure.bind(this, page, perPage));
 
-  this._requestPromises[this._config.page] = promise;
+  this._requestPromises[page] = promise;
   return promise;
 };
 
