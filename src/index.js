@@ -1,33 +1,36 @@
 'use strict';
 
 var assign = require('lodash.assign');
-var clone = require('lodash.clone');
 var ResultList = require('./result-list');
 
+var defaults = {
+  page: 1,
+  per_page: 20,
+  safesearch: true,
+  url: 'https://pixabay.com/api'
+};
 
 var pixabayjs = {
-  authenticate: function(username, key) {
-    this.username = username;
-    this.key = key;
-  },
+  _auth: {},
 
-  defaults: {
-    safesearch: true
+  authenticate: function(username, key) {
+    this._auth.username = username;
+    this._auth.key = key;
   },
 
   resultList: function(search, options, onSuccess, onFailure) {
-    var mergedOptions;
-    var optsClone = clone(options);
-
-    optsClone.key || (optsClone.key = this.key);
-    optsClone.page > 0 || (optsClone.page = 1);
-    optsClone.url || (optsClone.url = 'https://pixabay.com/api');
-    optsClone.username || (optsClone.username = this.username);
-
-    mergedOptions = assign(this.defaults, optsClone);
-
-    return new ResultList(search, mergedOptions, onSuccess, onFailure);
+    var config = assign(this.defaults, this._auth, options);
+    return new ResultList(search, config, onSuccess, onFailure);
   }
 };
+
+Object.defineProperty(pixabayjs, 'defaults', {
+  get: function() {
+    return defaults;
+  },
+  set: function(value) {
+    defaults = assign(defaults, value);
+  }
+});
 
 module.exports = pixabayjs;
