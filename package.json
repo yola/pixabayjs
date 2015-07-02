@@ -40,7 +40,6 @@
   },
   "dependencies": {
     "lodash.assign": "^3.2.0",
-    "lodash.clone": "^3.0.2",
     "lodash.omit": "^3.1.0",
     "q": "^1.4.1",
     "superagent": "^1.2.0"

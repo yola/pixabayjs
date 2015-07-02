@@ -3,7 +3,7 @@
 var assign = require('lodash.assign');
 var ResultList = require('./result-list');
 
-var defaults = {
+var _defaults = {
   page: 1,
   per_page: 20,
   safesearch: true,
@@ -18,19 +18,17 @@ var pixabayjs = {
     this._auth.key = key;
   },
 
+  get defaults () {
+    return _defaults;
+  },
+  set defaults (value) {
+    _defaults = assign(_defaults, value);
+  },
+
   resultList: function(search, options, onSuccess, onFailure) {
-    var config = assign(this.defaults, this._auth, options);
+    var config = assign({}, this.defaults, this._auth, options);
     return new ResultList(search, config, onSuccess, onFailure);
   }
 };
-
-Object.defineProperty(pixabayjs, 'defaults', {
-  get: function() {
-    return defaults;
-  },
-  set: function(value) {
-    defaults = assign(defaults, value);
-  }
-});
 
 module.exports = pixabayjs;
