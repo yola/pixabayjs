@@ -1,7 +1,7 @@
 'use strict';
 
-var Retriever = require('./retriever');
-var RequestFactory = require('./request-factory');
+var configFactory = require('./config-factory');
+var ResultList = require('./result-list');
 
 var pixabayjs = {
   authenticate: function(username, key) {
@@ -9,18 +9,22 @@ var pixabayjs = {
     this.key = key;
   },
 
-  defaults: function(defaults) {
-    this.defaults = defaults;
+  defaults: {},
+
+  makeConfig: function(search, options) {
+    var config = {
+      username: this.username,
+      key: this.key,
+      defaults: this.defaults,
+      search: search,
+      options: options
+    };
+
+    return configFactory(config);
   },
 
-  requestFactory: function(options) {
-    var retriever = new Retriever(options);
-    retriever
-      .username(this.username)
-      .key(this.key)
-      .defaults(this.defaults);
-
-    return new RequestFactory(retriever);
+  resultList: function(config, onSuccess, onFailure) {
+    return new ResultList(config, onSuccess, onFailure);
   }
 };
 
