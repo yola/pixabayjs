@@ -8,6 +8,8 @@ function ResultList(config, onSuccess, onFailure) {
     config.page = 1;
   }
 
+  config.per_page || (config.per_page = 20);
+
   this._config = config;
   this._onFailure = onFailure;
   this._onSuccess = onSuccess;
@@ -43,19 +45,19 @@ ResultList.prototype.previous = function() {
 
 ResultList.prototype._get = function() {
   var promise =  retrieve(this._config)
-    .then(this._handleSuccess.bind(this, this._page, this._perPage))
-    .fail(this._handleFailure.bind(this, this._page, this._perPage));
+    .then(this._success.bind(this, this._config.page, this._config.per_page))
+    .fail(this._failure.bind(this, this._config.page, this._config.per_page));
 
-  this._requestPromises[this._page] = promise;
+  this._requestPromises[this._config.page] = promise;
   return promise;
 };
 
-ResultList.prototype._handleSuccess = function(page, perPage, res) {
+ResultList.prototype._success = function(page, perPage, res) {
   var resHandler = new ResponseHandler(res, page, perPage, this._onSuccess);
   return resHandler.success();
 };
 
-ResultList.prototype._handleFailure = function(page, perPage, res) {
+ResultList.prototype._failure = function(page, perPage, res) {
   var resHandler = new ResponseHandler(res, page, perPage, this._onFailure);
   return resHandler.failure();
 };

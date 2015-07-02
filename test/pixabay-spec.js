@@ -57,7 +57,7 @@ describe('Pixabayjs', function() {
     });
   });
 
-  xdescribe('resultList', function() {
+  describe('resultList', function() {
     var config;
     beforeEach(function() {
       client.authenticate(username, key);
