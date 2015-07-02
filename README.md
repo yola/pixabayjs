@@ -15,22 +15,30 @@ var pixabay = require('pixabayjs');
 pixabay.authenticate('username', 'api_key');
 
 // Set default query parameters to make with every request
-pixabay.defaults({safesearch: 'true'});
+pixabay.defaults = {safesearch: true};
 
-// Create a RequestFactory
-var requestFactory = pixabay.requestFactory();
+// Get a ResultList
+var search = ['dogs', 'puppies'];
+var options = {editors_choice: true};
+var onSuccess = function(response) {
+  console.log('Success');
+  return response;
+};
+var onFailure = function(response) {
+  console.log('Failure');
+  return response;
+};
 
-// Configure the RequestFactory, using Pixabay's query parameters
-var resultList = requestFactory    
-    .query({order: 'latest'})
-    .search(['dogs', 'puppies'])
-    .resultList();
+var resultList = pixabay.resultList(search, options, onSuccess, onFailure);
 
 // Get a promise for a page of results
-var resultsPromise = resultList.next();
+var resultsPromise = resultList.next(); // page 1
 
 // Get a promise for the next page of results
-var resultsPromise2 = resultList.next();
+var resultsPromise2 = resultList.next(); // page 2
+
+// Get the previous page of results
+var resultPromise3 = resultList.previous(); // cached promise for page 1
 ```
 
 ## Development
@@ -45,52 +53,34 @@ var resultsPromise2 = resultList.next();
 
 ## API
 ### `pixabay`
-The high level client wrapper used set authentication, set default query parameters, and create `RequestFactory`s.
+The high level client wrapper used set authentication, set default query parameters, and create `ResponseFactory`s.
 
-#### `pixabay.authenticate(username, apiKey)`
-`authenticate` is used to set your `username` and `apiKey`, provided to you from [Pixabay][registration], on the client. The values are used each time a `RequestFactory` is created.
+#### authenticate `pixabay.authenticate(username, apiKey)`
+`authenticate` is used to set your `username` and `apiKey`, provided to you from [Pixabay][registration], on the client. The values are used each time a `ResponseFactory` is created.
 
-#### `pixabay.defaults({object})`
-Use `defaults` to set default query parameters for each created `RequestFactory`. Takes an object.
+#### defaults `pixabay.defaults`
+Use `defaults` to set default query parameters for each created `ResponseFactory`. Takes an object.
 
-#### `pixabay.requestFactory({options})`
-Returns a `RequestFactory` instance using the authentication credentials and defaults priviously set.
+#### resultList `pixabay.resultList(search, options, onSuccess, onFailure)`
+Returns a `ResultList` instance using the authentication credentials and defaults priviously set.
 
-Options are:
-- `url`: defaults to `https://www.pixabay.com/api`
-- `query`: defaults to `{}`. An alternative to `RequestFactory.query()`.
-- `search`: defaults to `[]`. An alternative to `RequestFactory.search()`.
-
-### `RequestFactory`
-An object used to configure a request to Pixabay.
-
-#### `RequestFactory.get({options})`
-Syntatical sugar for `RequestFactory.resultList(options).next()`. See `RequestFactory.resultList()` and `ResultList.next()` for further information.
-
-#### `RequestFactory.query({obj})`
-Used to set the query parameters sent with the Pixabay request. See the [documentation][docs] for a list of supported query parameters. **Note::** Use `RequestFactory.search()` specifically for the `q` query parameter; doing otherwise will cause your search string to be overwritten.
-
-#### `RequestFactory.search([arr]`
-Used to set an array of terms to search for. The array is converted into a query string before making the request.
-
-#### `RequestFactory.resultList({options})`
-Returns a `ResultList` object.
-
-Options are:
-- `onFailure`: an optional callback that is invoked when a request errors out.
-- `onSuccess`: an optional callback that is invoked when a request succeeds.
-- `page`: defaults to `1`. The results page to begin receiving results from.
+- `search`: Array of search terms
+- `options`: Object of key-value pairs to set the query parameters sent with the request to Pixabay. See the [documentation][docs] for a list of supported query parameters. 
+  - `url`: An additional supported key to override the request url.
+  - **Note:** Do not set `q`. Use the `search` argument instead.
+- `onSuccess`: A function called on a successful response.
+- `onFailure`: A function called on a failed response.
 
 ##### Callbacks
 The callbacks should take a `response` argument, which is the processed response from the request. See below for what the `response` object looks like.
 
-### `ResultList`
+### ResultList
 A generator that makes requests to Pixabay and returns a promise for each.
 
-#### `ResultList.next()`
-Returns a promise for the next page of results. Normally begins with the first page, but the initial page can be set by setting the `page` key in the `options` passed into `RequestFactory.resultList({options})`.
+#### next `ResultList.next()`
+Returns a promise for the next page of results. Normally begins with the first page, but the initial page can be set by setting the `page` key in the `options` passed into `pixabay.resultList()`.
 
-#### `ResultList.previous()`
+#### previous `ResultList.previous()`
 Returns a promose for the previous page of results. Will throw an error when requesting pages numbered <= 1;
 
 ### Pixabay Results
