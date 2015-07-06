@@ -6,7 +6,6 @@ var ResultList = require('./result-list');
 var requiredDefaults = {
   page: 1,
   per_page: 20,
-  safesearch: true,
   url: 'https://pixabay.com/api'
 };
 
