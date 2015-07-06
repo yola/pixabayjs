@@ -1,26 +1,28 @@
 'use strict';
 
-var Retriever = require('./retriever');
-var RequestFactory = require('./request-factory');
+var assign = require('lodash.assign');
+var ResultList = require('./result-list');
+
+var _internal = {
+  page: 1,
+  per_page: 20,
+  safesearch: true,
+  url: 'https://pixabay.com/api'
+};
 
 var pixabayjs = {
+  _auth: {},
+
+  defaults: {},
+
   authenticate: function(username, key) {
-    this.username = username;
-    this.key = key;
+    this._auth.username = username;
+    this._auth.key = key;
   },
 
-  defaults: function(defaults) {
-    this.defaults = defaults;
-  },
-
-  requestFactory: function(options) {
-    var retriever = new Retriever(options);
-    retriever
-      .username(this.username)
-      .key(this.key)
-      .defaults(this.defaults);
-
-    return new RequestFactory(retriever);
+  resultList: function(search, options, onSuccess, onFailure) {
+    var config = assign({}, _internal, this.defaults, this._auth, options);
+    return new ResultList(search, config, onSuccess, onFailure);
   }
 };
 

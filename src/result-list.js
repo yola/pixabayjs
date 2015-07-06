@@ -1,68 +1,61 @@
 'use strict';
 
 var ResponseHandler = require('./response-handler');
+var retrieve = require('./retrieve');
 
-function ResultList(retriever, options) {
-  if (!retriever) {
-    throw new Error('Expected Retriever as an argument');
-  }
 
-  options || (options = {});
-
-  this._retriever = retriever;
-  this._onFailure = options.onFailure;
-  this._onSuccess = options.onSuccess;
-  this._page = options.page ? options.page - 1 : 0;
-  this._perPage = options.perPage || 20;
+function ResultList(search, options, onSuccess, onFailure) {
+  this._search = search;
+  this._options = options;
+  this._onSuccess = onSuccess;
+  this._onFailure = onFailure;
   this._requestPromises = [];
 
-  this._retriever.query({per_page: this._perPage});
+  // first call of next will increment to desired page
+  this._options.page -= 1;
 }
 
 ResultList.prototype.next = function() {
-  this._page += 1;
+  var nextPage = this._options.page += 1;
 
-  this._retriever.query({page: this._page});
-
-  if (this._requestPromises[this._page]) {
-    return this._requestPromises[this._page];
+  if (this._requestPromises[nextPage]) {
+    return this._requestPromises[nextPage];
   }
 
   return this._get();
 };
 
 ResultList.prototype.previous = function() {
-  if (this._page <= 1) {
+  if (this._options.page <= 1) {
     throw new Error('There is no previous page');
   }
 
-  this._page -= 1;
+  var previousPage = this._options.page -= 1;
 
-  if (this._requestPromises[this._page]) {
-    return this._requestPromises[this._page];
+  if (this._requestPromises[previousPage]) {
+    return this._requestPromises[previousPage];
   }
-
-  this._retriever.query({page: this._page});
 
   return this._get();
 };
 
 ResultList.prototype._get = function() {
-  var promise =  this._retriever
-    .get()
-    .then(this._handleSuccess.bind(this, this._page, this._perPage))
-    .fail(this._handleFailure.bind(this, this._page, this._perPage));
+  var page = this._options.page;
+  var perPage = this._options.per_page;
+  var promise =  retrieve(this._search, this._options)
+    .then(this._success.bind(this, page, perPage))
+    .fail(this._failure.bind(this, page, perPage));
 
-  this._requestPromises[this._page] = promise;
+  this._requestPromises[page] = promise;
   return promise;
 };
 
-ResultList.prototype._handleSuccess = function(page, perPage, res) {
+ResultList.prototype._success = function(page, perPage, res) {
   var resHandler = new ResponseHandler(res, page, perPage, this._onSuccess);
   return resHandler.success();
 };
 
-ResultList.prototype._handleFailure = function(page, perPage, res) {
+ResultList.prototype._failure = function(page, perPage, res) {
   var resHandler = new ResponseHandler(res, page, perPage, this._onFailure);
   return resHandler.failure();
 };
