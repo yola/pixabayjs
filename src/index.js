@@ -3,10 +3,9 @@
 var assign = require('lodash.assign');
 var ResultList = require('./result-list');
 
-var _internal = {
+var requiredDefaults = {
   page: 1,
   per_page: 20,
-  safesearch: true,
   url: 'https://pixabay.com/api'
 };
 
@@ -20,8 +19,8 @@ var pixabayjs = {
     this._auth.key = key;
   },
 
-  resultList: function(search, options, onSuccess, onFailure) {
-    var config = assign({}, _internal, this.defaults, this._auth, options);
+  resultList: function(search, opts, onSuccess, onFailure) {
+    var config = assign({}, requiredDefaults, this.defaults, this._auth, opts);
     return new ResultList(search, config, onSuccess, onFailure);
   }
 };
