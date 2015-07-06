@@ -1,5 +1,13 @@
 # [Changelog](https://github.com/yola/pixabayjs/releases)
 
+## 0.5.0
+* `pixabayjs` API changes ([#19][19])
+    - `pixabayjs.defaults` is now an object instead of a function.
+    - `pixabayjs.requestFactory` has been replaced with `pixabayjs.resultList`, which returns a new `ResultList`.
+    - Intermediary `RequestFactory` removed.
+* Internal changes to reduce dependency on state.
+[19]: https://github.com/yola/pixabayjs/pull/19
+
 ## 0.4.0
 * Added `previous` function to `ResultList`. Comes with promise caching ([#15][15])
 * Replace `host`, `protocol`, and `path` options with `url` for RequestFactory ([#14][14])
