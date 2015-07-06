@@ -2,8 +2,9 @@
 
 ## 0.5.0
 * `pixabayjs` API changes ([#19][19])
-    - `pixabayjs.defaults` is now an object instead of a function
-    - `pixabayjs.requestFactory` has been replaced with `pixabayjs.resultList`, which returns a new `ResultList`. The `RequestFactory` no longer exists and thus there is no intermediate object.
+    - `pixabayjs.defaults` is now an object instead of a function.
+    - `pixabayjs.requestFactory` has been replaced with `pixabayjs.resultList`, which returns a new `ResultList`.
+    - Intermediary `RequestFactory` removed.
 * Internal changes to reduce dependency on state.
 [19]: https://github.com/yola/pixabayjs/pull/19
 
