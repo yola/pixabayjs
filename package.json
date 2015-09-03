@@ -21,7 +21,6 @@
   },
   "homepage": "https://github.com/yola/pixabayjs#readme",
   "devDependencies": {
-    "babelify": "^6.3.0",
     "bindpolyfill": "0.0.0",
     "chai": "^2.3.0",
     "chai-as-promised": "^5.0.0",
@@ -40,6 +39,7 @@
     "sinon-chai": "^2.8.0"
   },
   "dependencies": {
+    "babelify": "^6.3.0",
     "lodash.assign": "^3.2.0",
     "lodash.omit": "^3.1.0",
     "q": "^1.4.1",
