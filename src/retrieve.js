@@ -2,10 +2,12 @@
 
 'use strict';
 
-let omit = require('lodash.omit');
-let request = require('superagent');
-let q = require('q');
-let url = require('url');
+import {
+  omit,
+  q,
+  request,
+  url
+} from './exports';
 
 let searchString = function(search) {
   return search.map(function(term) {

@@ -2,9 +2,8 @@
 
 'use strict';
 
+import {assign} from './exports';
 import ResultList from './result-list';
-
-let assign = require('lodash.assign');
 
 let requiredDefaults = {
   page: 1,
