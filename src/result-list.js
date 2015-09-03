@@ -1,3 +1,5 @@
+/* jshint esnext: true */
+
 'use strict';
 
 import ResponseHandler from './response-handler';
@@ -55,7 +57,6 @@ class ResultList {
       let resHandler = new ResponseHandler(res, page, perPage, this._onSuccess);
       return resHandler.success();
     };
-
   }
 
   _failure(page, perPage) {
