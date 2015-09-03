@@ -7,6 +7,7 @@ var q = require('q');
 var request = require('superagent');
 var url = require('url');
 
+
 let searchString = function(search) {
   return search.map(function(term) {
     return encodeURIComponent(term);
@@ -21,6 +22,7 @@ let urlPromise = function(query, urlStr, search) {
 
   return q(url.format(urlObj));
 };
+
 
 export default function(search, options) {
   let query = omit(options, 'url');

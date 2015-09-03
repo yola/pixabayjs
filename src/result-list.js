@@ -5,6 +5,7 @@
 let ResponseHandler = require('./response-handler');
 let retrieve = require('./retrieve');
 
+
 class ResultList {
   constructor(search, options, onSuccess, onFailure) {
     this._search = search;

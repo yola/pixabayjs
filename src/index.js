@@ -5,6 +5,7 @@
 let assign = require('lodash.assign');
 let ResultList = require('./result-list');
 
+
 let requiredDefaults = {
   page: 1,
   per_page: 20,
@@ -26,5 +27,6 @@ let pixabayjs = {
     return new ResultList(search, config, onSuccess, onFailure);
   }
 };
+
 
 export default pixabayjs;
