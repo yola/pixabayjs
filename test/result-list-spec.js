@@ -2,14 +2,13 @@
 
 'use strict';
 
-import ResultList from '../src/result-list';
-
 let chai = require('chai');
 let chaiAsPromised = require('chai-as-promised');
 let mockagent = require('mockagent');
 let pixabay = require('../src/index');
 let promiseHelpers = require('promisehelpers');
 let range = require('lodash.range');
+let ResultList = require('../src/result-list');
 let sinon = require('sinon');
 let sinonChai = require('sinon-chai');
 let superagent = require('superagent');

@@ -2,7 +2,7 @@
 
 'use strict';
 
-import {q} from './exports';
+let q = require('q');
 
 let noop = function(res) {
   return res;

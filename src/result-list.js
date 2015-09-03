@@ -2,8 +2,8 @@
 
 'use strict';
 
-import ResponseHandler from './response-handler';
-import retrieve from './retrieve';
+let ResponseHandler = require('./response-handler');
+let retrieve = require('./retrieve');
 
 class ResultList {
   constructor(search, options, onSuccess, onFailure) {

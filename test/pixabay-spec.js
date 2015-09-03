@@ -2,11 +2,10 @@
 
 'use strict';
 
-import ResultList from '../src/result-list';
-
 let chai = require('chai');
 let chaiAsPromised = require('chai-as-promised');
 let pixabay = require('../src/index');
+let ResultList = require('../src/result-list');
 
 let expect = chai.expect;
 chai.use(chaiAsPromised);

@@ -2,8 +2,8 @@
 
 'use strict';
 
-import {assign} from './exports';
-import ResultList from './result-list';
+let assign = require('lodash.assign');
+let ResultList = require('./result-list');
 
 let requiredDefaults = {
   page: 1,
@@ -27,5 +27,4 @@ let pixabayjs = {
   }
 };
 
-module.exports = pixabayjs;
 export default pixabayjs;
