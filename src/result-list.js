@@ -43,21 +43,26 @@ class ResultList {
     let page = this._options.page;
     let perPage = this._options.per_page;
     let promise =  retrieve(this._search, this._options)
-      .then(this._success.bind(this, page, perPage))
-      .fail(this._failure.bind(this, page, perPage));
+      .then(this._success(page, perPage))
+      .fail(this._failure(page, perPage));
 
     this._requestPromises[page] = promise;
     return promise;
   }
 
-  _success(page, perPage, res) {
-    let resHandler = new ResponseHandler(res, page, perPage, this._onSuccess);
-    return resHandler.success();
+  _success(page, perPage) {
+    return (res) => {
+      let resHandler = new ResponseHandler(res, page, perPage, this._onSuccess);
+      return resHandler.success();
+    };
+
   }
 
-  _failure(page, perPage, res) {
-    let resHandler = new ResponseHandler(res, page, perPage, this._onFailure);
-    return resHandler.failure();
+  _failure(page, perPage) {
+    return (res) => {
+      let resHandler = new ResponseHandler(res, page, perPage, this._onFailure);
+      return resHandler.failure();
+    };
   }
 }
 
