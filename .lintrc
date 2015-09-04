@@ -1,2 +1,5 @@
 [tools]
 linters = jshint
+
+[tool_jshint]
+config = /srv/lintreview/live/node_modules/jsgreat/es6/.jshintrc
