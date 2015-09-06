@@ -1,28 +1,32 @@
+/* jshint esnext: true */
+
 'use strict';
 
-var assign = require('lodash.assign');
-var ResultList = require('./result-list');
+let assign = require('lodash.assign');
+let ResultList = require('./result-list');
 
-var requiredDefaults = {
+
+let requiredDefaults = {
   page: 1,
   per_page: 20,
   url: 'https://pixabay.com/api'
 };
 
-var pixabayjs = {
+let pixabayjs = {
   _auth: {},
 
   defaults: {},
 
-  authenticate: function(username, key) {
+  authenticate(username, key) {
     this._auth.username = username;
     this._auth.key = key;
   },
 
-  resultList: function(search, opts, onSuccess, onFailure) {
-    var config = assign({}, requiredDefaults, this.defaults, this._auth, opts);
+  resultList(search, opts, onSuccess, onFailure) {
+    let config = assign({}, requiredDefaults, this.defaults, this._auth, opts);
     return new ResultList(search, config, onSuccess, onFailure);
   }
 };
 
-module.exports = pixabayjs;
+
+export default pixabayjs;

@@ -39,9 +39,13 @@
     "sinon-chai": "^2.8.0"
   },
   "dependencies": {
+    "babelify": "^6.3.0",
     "lodash.assign": "^3.2.0",
     "lodash.omit": "^3.1.0",
     "q": "^1.4.1",
-    "superagent": "^1.2.0"
+    "superagent": "1.2.x"
+  },
+  "browserify": {
+    "transforms": ["babelify"]
   }
 }
