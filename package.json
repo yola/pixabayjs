@@ -49,5 +49,8 @@
     "transform": [
       "babelify"
     ]
+  },
+  "jshintConfig": {
+    "extends": "./node_modules/jsgreat/es6/.jshintrc"
   }
 }
