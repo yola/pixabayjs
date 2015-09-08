@@ -6,7 +6,8 @@ module.exports = function(config) {
     browsers: ['PhantomJS'],
     browserify: {
       debug: true,
-      watch: true
+      watch: true,
+      transform: ['babelify']
     },
     preprocessors: {
       'test/**/*.js': ['browserify']

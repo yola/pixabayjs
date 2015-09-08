@@ -24,7 +24,7 @@
     "bindpolyfill": "0.0.0",
     "chai": "^2.3.0",
     "chai-as-promised": "^5.0.0",
-    "jsgreat": "^0.1.6",
+    "jsgreat": "^0.1.7",
     "karma": "^0.12.37",
     "karma-browserify": "^4.2.1",
     "karma-mocha": "^0.2.0",
@@ -39,9 +39,18 @@
     "sinon-chai": "^2.8.0"
   },
   "dependencies": {
+    "babelify": "^6.3.0",
     "lodash.assign": "^3.2.0",
     "lodash.omit": "^3.1.0",
     "q": "^1.4.1",
-    "superagent": "^1.2.0"
+    "superagent": "1.2.x"
+  },
+  "browserify": {
+    "transform": [
+      "babelify"
+    ]
+  },
+  "jshintConfig": {
+    "extends": "./node_modules/jsgreat/es6/.jshintrc"
   }
 }
