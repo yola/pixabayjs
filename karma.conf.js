@@ -7,7 +7,6 @@ module.exports = function(config) {
     browserify: {
       debug: true,
       watch: true,
-      transform: ['babelify']
     },
     preprocessors: {
       'test/**/*.js': ['browserify']
