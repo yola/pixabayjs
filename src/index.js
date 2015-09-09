@@ -20,8 +20,8 @@ const pixabayjs = {
   },
 
   resultList: function(search, opts, onSuccess, onFailure) {
-    const config = assign({}, requiredDefaults, this.defaults, this._auth, opts);
-    return new ResultList(search, config, onSuccess, onFailure);
+    const conf = assign({}, requiredDefaults, this.defaults, this._auth, opts);
+    return new ResultList(search, conf, onSuccess, onFailure);
   }
 };
 
