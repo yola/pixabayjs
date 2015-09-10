@@ -1,5 +1,9 @@
 # [Changelog](https://github.com/yola/pixabayjs/releases)
 
+## 0.5.1
+* Added es6 support through the use of Babel. ([#27][27])
+[27]: https://github.com/yola/pixabayjs/pull/27
+
 ## 0.5.0
 * `pixabayjs` API changes ([#19][19])
     - `pixabayjs.defaults` is now an object instead of a function.
