@@ -1,38 +1,35 @@
 'use strict';
 
-var chai = require('chai');
-var chaiAsPromised = require('chai-as-promised');
-var mockagent = require('mockagent');
-var pixabay = require('../src/index');
-var promiseHelpers = require('promisehelpers');
-var range = require('lodash.range');
-var ResultList = require('../src/result-list');
-var sinon = require('sinon');
-var sinonChai = require('sinon-chai');
-var superagent = require('superagent');
-var url = require('url');
+const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
+const mockagent = require('mockagent');
+const pixabay = require('../src/index');
+const range = require('lodash.range');
+const ResultList = require('../src/result-list');
+const sinon = require('sinon');
+const sinonChai = require('sinon-chai');
+const superagent = require('superagent');
+const url = require('url');
+const {expect} = chai;
+const {notify, wrap} = require('promisehelpers');
 
-var notify = promiseHelpers.notify;
-var wrap = promiseHelpers.wrap;
 
-var expect = chai.expect;
 chai.use(chaiAsPromised);
 chai.use(sinonChai);
 
-var username = 'username';
-var key = 'key';
-
-var pixabayUrl = 'https://pixabay.com/api';
+const username = 'username';
+const key = 'key';
+const pixabayUrl = 'https://pixabay.com/api';
 
 pixabay.authenticate(username, key);
 
-var mockResponse = function() {
+const mockResponse = function() {
   mockagent.target(superagent);
 
   mockagent.get(pixabayUrl, function(res) {
-    var query = url.parse(this.url, true).query;
+    const query = url.parse(this.url, true).query;
 
-    var hits = [];
+    let hits = [];
 
     if (query.page === '1') {
       hits = range(0, 20);
@@ -40,11 +37,11 @@ var mockResponse = function() {
       hits = range(20, 25);
     }
 
-    var noError = !!hits.length;
+    const noError = !!hits.length;
 
-    var error =  'ERROR: "page"/"per_page" is out of valid range.';
+    const error =  'ERROR: "page"/"per_page" is out of valid range.';
 
-    var response = {
+    const response = {
       totalHits: noError ? 25 : undefined,
       hits: noError ? hits : undefined,
       error: noError ? null : error
@@ -60,22 +57,22 @@ var mockResponse = function() {
 };
 
 describe('ResultList', function() {
-  var baseConfig = {
+  const baseConfig = {
     page: 1,
     per_page: 20,
     safesearch: true,
     url: 'https://pixabay.com/api'
   };
 
-  var search = ['dogs', 'puppies'];
+  const search = ['dogs', 'puppies'];
 
-  var noop = function(res) {
+  const noop = function(res) {
     return res;
   };
 
-  var resultList;
-  var cbSuccess = sinon.spy(noop);
-  var cbFailure = sinon.spy(noop);
+  const cbSuccess = sinon.spy(noop);
+  const cbFailure = sinon.spy(noop);
+  let resultList;
 
   before(function() {
     mockResponse(pixabayUrl);
@@ -86,10 +83,10 @@ describe('ResultList', function() {
   });
 
   describe('initial request for page 1', function() {
-    var response = {};
+    const response = {};
 
     before(function(done) {
-      var config = Object.create(baseConfig);
+      const config = Object.create(baseConfig);
       resultList = pixabay.resultList(search, config, cbSuccess, cbFailure);
       resultList
         .next()
@@ -127,10 +124,10 @@ describe('ResultList', function() {
   });
 
   describe('previous() on page 1', function() {
-    var response = {};
+    const response = {};
 
     before(function(done) {
-      var config = Object.create(baseConfig);
+      const config = Object.create(baseConfig);
 
       resultList = pixabay.resultList(search, config, cbSuccess, cbFailure);
       resultList
@@ -144,19 +141,17 @@ describe('ResultList', function() {
     });
 
     it('throws an error when there is no previous page', function() {
-      var test = function() {
-        resultList.previous();
-      };
+      const test = () => resultList.previous();
 
       expect(test).to.throw('There is no previous page');
     });
   });
 
   describe('next() on page 1', function() {
-    var response = {};
+    const response = {};
 
     before(function(done) {
-      var config = Object.create(baseConfig);
+      const config = Object.create(baseConfig);
 
       resultList = pixabay.resultList(search, config, cbSuccess, cbFailure);
       resultList.next();
@@ -177,11 +172,11 @@ describe('ResultList', function() {
   });
 
   describe('previous() on page 2', function() {
-    var response = {};
-    var _get;
+    const response = {};
+    let _get;
 
     before(function(done) {
-      var config = Object.create(baseConfig);
+      const config = Object.create(baseConfig);
 
       resultList = pixabay.resultList(search, config, cbSuccess, cbFailure);
       resultList.next();
@@ -210,11 +205,11 @@ describe('ResultList', function() {
   });
 
   describe('second next() on page 1', function() {
-    var response = {};
-    var _get;
+    const response = {};
+    let _get;
 
     before(function(done) {
-      var config = Object.create(baseConfig);
+      const config = Object.create(baseConfig);
 
       resultList = pixabay.resultList(search, config, cbSuccess, cbFailure);
       resultList.next();
@@ -244,10 +239,10 @@ describe('ResultList', function() {
   });
 
   describe('next() on page 2', function() {
-    var response = {};
+    const response = {};
 
     before(function(done) {
-      var config = Object.create(baseConfig);
+      const config = Object.create(baseConfig);
 
       resultList = pixabay.resultList(search, config, cbSuccess, cbFailure);
       resultList.next();
@@ -271,7 +266,7 @@ describe('ResultList', function() {
     });
 
     it('returns an error', function() {
-      var errorRgx = /ERROR: "page"\/"per_page" is out of valid range\./;
+      const errorRgx = /ERROR: "page"\/"per_page" is out of valid range\./;
       expect(response.data.error).to.match(errorRgx);
     });
 

@@ -24,7 +24,6 @@
     "bindpolyfill": "0.0.0",
     "chai": "^2.3.0",
     "chai-as-promised": "^5.0.0",
-    "jsgreat": "^0.1.7",
     "karma": "^0.12.37",
     "karma-browserify": "^4.2.1",
     "karma-mocha": "^0.2.0",
@@ -40,6 +39,7 @@
   },
   "dependencies": {
     "babelify": "^6.3.0",
+    "jsgreat": "^0.1.7",
     "lodash.assign": "^3.2.0",
     "lodash.omit": "^3.1.0",
     "q": "^1.4.1",

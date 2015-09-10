@@ -1,15 +1,15 @@
 'use strict';
 
-var assign = require('lodash.assign');
-var ResultList = require('./result-list');
+const assign = require('lodash.assign');
+const ResultList = require('./result-list');
 
-var requiredDefaults = {
+const requiredDefaults = {
   page: 1,
   per_page: 20,
   url: 'https://pixabay.com/api'
 };
 
-var pixabayjs = {
+const pixabayjs = {
   _auth: {},
 
   defaults: {},
@@ -20,8 +20,8 @@ var pixabayjs = {
   },
 
   resultList: function(search, opts, onSuccess, onFailure) {
-    var config = assign({}, requiredDefaults, this.defaults, this._auth, opts);
-    return new ResultList(search, config, onSuccess, onFailure);
+    const conf = assign({}, requiredDefaults, this.defaults, this._auth, opts);
+    return new ResultList(search, conf, onSuccess, onFailure);
   }
 };
 
