@@ -1,6 +1,6 @@
 {
   "name": "pixabayjs",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Pixabay API client wrapper",
   "main": "src/index.js",
   "scripts": {
