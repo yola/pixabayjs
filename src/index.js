@@ -1,7 +1,7 @@
 'use strict';
 
-const assign = require('lodash.assign');
-const ResultList = require('./result-list');
+import assign from 'lodash.assign';
+import ResultList from './result-list';
 
 const requiredDefaults = {
   page: 1,

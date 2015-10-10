@@ -1,7 +1,7 @@
 'use strict';
 
-const ResponseHandler = require('./response-handler');
-const retrieve = require('./retrieve');
+import ResponseHandler from './response-handler';
+import retrieve from './retrieve';
 
 
 class ResultList {
@@ -67,4 +67,4 @@ class ResultList {
 }
 
 
-module.exports = ResultList;
+export default ResultList;

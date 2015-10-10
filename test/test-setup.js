@@ -1,1 +1,1 @@
-require('bindpolyfill');
+import 'bindpolyfill';

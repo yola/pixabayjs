@@ -1,9 +1,10 @@
 'use strict';
 
-const chai = require('chai');
-const chaiAsPromised = require('chai-as-promised');
-const pixabay = require('../src/index');
-const ResultList = require('../src/result-list');
+import chai from 'chai';
+import chaiAsPromised from 'chai-as-promised';
+import pixabay from '../src/index';
+import ResultList from '../src/result-list';
+
 const {expect} = chai;
 
 chai.use(chaiAsPromised);
