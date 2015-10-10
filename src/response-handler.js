@@ -1,6 +1,6 @@
 'use strict';
 
-const q = require('q');
+import q from 'q';
 
 
 const noop = function(res) {

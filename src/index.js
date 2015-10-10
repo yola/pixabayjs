@@ -25,4 +25,4 @@ const pixabayjs = {
   }
 };
 
-module.exports = pixabayjs;
+export default pixabayjs;
