@@ -1,15 +1,16 @@
 'use strict';
 
-const chai = require('chai');
-const chaiAsPromised = require('chai-as-promised');
-const mockagent = require('mockagent');
-const pixabay = require('../src/index');
-const range = require('lodash.range');
-const ResultList = require('../src/result-list');
-const sinon = require('sinon');
-const sinonChai = require('sinon-chai');
-const superagent = require('superagent');
-const url = require('url');
+import chai from 'chai';
+import chaiAsPromised from 'chai-as-promised';
+import mockagent from 'mockagent';
+import pixabay from '../src/index';
+import range from 'lodash.range';
+import ResultList from '../src/result-list';
+import sinon from 'sinon';
+import sinonChai from 'sinon-chai';
+import superagent from 'superagent';
+import url from 'url';
+
 const {expect} = chai;
 const {notify, wrap} = require('promisehelpers');
 
