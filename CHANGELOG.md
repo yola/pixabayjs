@@ -1,5 +1,11 @@
 # [Changelog](https://github.com/yola/pixabayjs/releases)
 
+## 0.5.2
+* Wrapped error parsing in try/catch block in case error was not valid JSON ([#29][29])
+* Changed module loading to use es6 ([#30][30])
+[29]: https://github.com/yola/pixabayjs/pull/29
+[30]: https://github.com/yola/pixabayjs/pull/30
+
 ## 0.5.1
 * Added es6 support through the use of Babel. ([#27][27])
 [27]: https://github.com/yola/pixabayjs/pull/27
