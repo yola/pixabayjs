@@ -25,7 +25,15 @@ class ResponseHandler {
   }
 
   failure() {
-    const error = JSON.parse(this.res.response.xhr.responseText);
+    let error;
+
+    try {
+      error = JSON.parse(this.res.response.xhr.responseText);
+    }
+    catch(e) {
+      error = this.res.response.xhr.responseText;
+    }
+
     const data = {
       error: error,
       page: this.page,

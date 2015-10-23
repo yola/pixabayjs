@@ -50,7 +50,7 @@ const mockResponse = function() {
 
     res.xhr = {
       status: noError ? 200 : 400,
-      responseText: JSON.stringify(noError ? response : error)
+      responseText: noError ? JSON.stringify(response) : error
     };
 
     return res;
