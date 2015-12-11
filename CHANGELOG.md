@@ -1,5 +1,13 @@
 # [Changelog](https://github.com/yola/pixabayjs/releases)
 
+## 0.6.0
+* Updated client to match pixabay's new API. ([#33][33])
+    * `username` is no longer a parameter needed by the API. `pixabayjs.authenticate` now only accepts a `apiKey` argument: `pixabayjs.authenticate(apiKey)`.
+    * HTTP is no longer supported. However, client was already defaulting to HTTPS.
+    * New API keys have been issued. Old API keys will not work after 2/1/2016.
+    * Image hash IDs will need to be changed. Use the old hash with the new API key to get the new hash.
+[33]: https://github.com/yola/pixabayjs/pull/33
+
 ## 0.5.2
 * Wrapped error parsing in try/catch block in case error was not valid JSON ([#29][29])
 * Changed module loading to use es6 ([#30][30])
