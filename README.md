@@ -53,13 +53,13 @@ var resultPromise3 = resultList.previous(); // cached promise for page 1
 
 ## API
 ### `pixabay`
-The high level client wrapper used set authentication, set default query parameters, and create `ResponseFactory`s.
+The high level client wrapper used to set authentication, set default query parameters, and create `ResultList`s.
 
-#### authenticate `pixabay.authenticate(username, apiKey)`
-`authenticate` is used to set your `username` and `apiKey`, provided to you from [Pixabay][registration], on the client. The values are used each time a `ResponseFactory` is created.
+#### authenticate `pixabay.authenticate(apiKey)`
+`authenticate` is used to set your `apiKey`, provided to you from [Pixabay][registration], on the client. The values are used each time a `ResultList` is created.
 
 #### defaults `pixabay.defaults`
-Use `defaults` to set default query parameters for each created `ResponseFactory`. Takes an object.
+Use `defaults` to set default query parameters for each created `ResultList`. Takes an object.
 
 #### resultList `pixabay.resultList(search, options, onSuccess, onFailure)`
 Returns a `ResultList` instance using the authentication credentials and defaults priviously set.
