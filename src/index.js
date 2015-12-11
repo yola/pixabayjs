@@ -14,8 +14,7 @@ const pixabayjs = {
 
   defaults: {},
 
-  authenticate: function(username, key) {
-    this._auth.username = username;
+  authenticate: function(key) {
     this._auth.key = key;
   },
 

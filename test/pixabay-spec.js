@@ -9,7 +9,6 @@ const {expect} = chai;
 
 chai.use(chaiAsPromised);
 
-const username = 'username';
 const key = 'key';
 
 describe('Pixabayjs', function() {
@@ -25,9 +24,8 @@ describe('Pixabayjs', function() {
   });
 
   describe('authenticate', function() {
-    it('sets the client\'s username and key', function() {
-      client.authenticate(username, key);
-      expect(client._auth.username).to.equal(username);
+    it('sets the client\'s key', function() {
+      client.authenticate(key);
       expect(client._auth.key).to.equal(key);
     });
   });

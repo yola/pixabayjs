@@ -18,11 +18,7 @@ const {notify, wrap} = require('promisehelpers');
 chai.use(chaiAsPromised);
 chai.use(sinonChai);
 
-const username = 'username';
-const key = 'key';
 const pixabayUrl = 'https://pixabay.com/api';
-
-pixabay.authenticate(username, key);
 
 const mockResponse = function() {
   mockagent.target(superagent);
