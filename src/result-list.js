@@ -1,5 +1,7 @@
 'use strict';
 
+import q from 'q';
+
 import ResponseHandler from './response-handler';
 import retrieve from './retrieve';
 
@@ -43,9 +45,9 @@ class ResultList {
   _get() {
     const page = this._options.page;
     const perPage = this._options.per_page;
-    const promise =  retrieve(this._search, this._options)
+    const promise =  q(retrieve(this._search, this._options))
       .then(this._success(page, perPage))
-      .fail(this._failure(page, perPage));
+      .catch(this._failure(page, perPage));
 
     this._requestPromises[page] = promise;
     return promise;
