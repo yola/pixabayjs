@@ -1,5 +1,9 @@
 # [Changelog](https://github.com/yola/pixabayjs/releases)
 
+## 1.0.1
+* Update dependencies to latest version where applicable. ([#37][37])
+[37]: https://github.com/yola/pixabayjs/pull/33
+
 ## 1.0.0
 * Updated client to match pixabay's new API. ([#33][33])
     * `username` is no longer a parameter needed by the API. `pixabayjs.authenticate` now only accepts a `apiKey` argument: `pixabayjs.authenticate(apiKey)`.
