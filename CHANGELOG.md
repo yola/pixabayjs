@@ -1,5 +1,8 @@
 # [Changelog](https://github.com/yola/pixabayjs/releases)
 
+## 1.0.2
+* Pin dependencies to minor version
+
 ## 1.0.1
 * Update dependencies to latest version where applicable. ([#37][37])
 [37]: https://github.com/yola/pixabayjs/pull/33
