@@ -56,7 +56,7 @@ describe('Pixabayjs', function() {
       expect(client.videoResultList(search)).to.be.instanceof(ResultList);
     });
 
-    it('uses the image url', function() {
+    it('uses the video url', function() {
       const spy = sinon.spy(client, '_makeConfig');
       client.videoResultList(search);
       expect(spy).to.be.calledWith('https://pixabay.com/api/videos');
