@@ -1,5 +1,9 @@
 # [Changelog](https://github.com/yola/pixabayjs/releases)
 
+## DEV
+* Change `resultList` to `imageResultList` for images
+* Introduce `videoResultList` for videos
+
 ## 1.0.2
 * Pin dependencies to minor version
 
