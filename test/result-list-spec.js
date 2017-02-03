@@ -3,13 +3,14 @@
 import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import mockagent from 'mockagent';
-import pixabay from '../src/index';
 import range from 'lodash.range';
-import ResultList from '../src/result-list';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import superagent from 'superagent';
 import url from 'url';
+
+import ResultList from '../src/result-list';
+
 
 const {expect} = chai;
 const {notify, wrap} = require('promisehelpers');
@@ -84,7 +85,7 @@ describe('ResultList', function() {
 
     before(function(done) {
       const config = Object.create(baseConfig);
-      resultList = pixabay.resultList(search, config, cbSuccess, cbFailure);
+      resultList = new ResultList(search, config, cbSuccess, cbFailure);
       resultList
         .next()
         .then(wrap(response, 'data'))
@@ -126,7 +127,7 @@ describe('ResultList', function() {
     before(function(done) {
       const config = Object.create(baseConfig);
 
-      resultList = pixabay.resultList(search, config, cbSuccess, cbFailure);
+      resultList = new ResultList(search, config, cbSuccess, cbFailure);
       resultList
         .next()
         .then(wrap(response, 'data'))
@@ -150,7 +151,7 @@ describe('ResultList', function() {
     before(function(done) {
       const config = Object.create(baseConfig);
 
-      resultList = pixabay.resultList(search, config, cbSuccess, cbFailure);
+      resultList = new ResultList(search, config, cbSuccess, cbFailure);
       resultList.next();
       resultList
         .next()
@@ -175,7 +176,7 @@ describe('ResultList', function() {
     before(function(done) {
       const config = Object.create(baseConfig);
 
-      resultList = pixabay.resultList(search, config, cbSuccess, cbFailure);
+      resultList = new ResultList(search, config, cbSuccess, cbFailure);
       resultList.next();
       resultList.next();
 
@@ -208,7 +209,7 @@ describe('ResultList', function() {
     before(function(done) {
       const config = Object.create(baseConfig);
 
-      resultList = pixabay.resultList(search, config, cbSuccess, cbFailure);
+      resultList = new ResultList(search, config, cbSuccess, cbFailure);
       resultList.next();
       resultList.next();
       resultList.previous();
@@ -241,7 +242,7 @@ describe('ResultList', function() {
     before(function(done) {
       const config = Object.create(baseConfig);
 
-      resultList = pixabay.resultList(search, config, cbSuccess, cbFailure);
+      resultList = new ResultList(search, config, cbSuccess, cbFailure);
       resultList.next();
       resultList.next();
       resultList
