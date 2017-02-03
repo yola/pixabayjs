@@ -27,6 +27,12 @@ const pixabayjs = {
     const url = 'https://pixabay.com/api';
     const conf = this._makeConfig(url, opts);
     return new ResultList(search, conf, onSuccess, onFailure);
+  },
+
+  videoResultList: function(search, opts, onSuccess, onFailure) {
+    const url = 'https://pixabay.com/api/videos';
+    const conf = this._makeConfig(url, opts);
+    return new ResultList(search, conf, onSuccess, onFailure);
   }
 };
 
