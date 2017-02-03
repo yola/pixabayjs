@@ -61,12 +61,20 @@ The high level client wrapper used to set authentication, set default query para
 #### defaults `pixabay.defaults`
 Use `defaults` to set default query parameters for each created `ResultList`. Takes an object.
 
-#### resultList `pixabay.resultList(search, options, onSuccess, onFailure)`
-Returns a `ResultList` instance using the authentication credentials and defaults priviously set.
+#### imageResultList `pixabay.imageResultList(search, options, onSuccess, onFailure)`
+Returns a `ResultList` instance using the authentication credentials and defaults previously set.
 
 - `search`: Array of search terms
-- `options`: Object of key-value pairs to set the query parameters sent with the request to Pixabay. See the [documentation][docs] for a list of supported query parameters. 
-  - `url`: An additional supported key to override the request url.
+- `options`: Object of key-value pairs to set the query parameters sent with the request to Pixabay. See the [documentation][docs] for a list of supported query parameters.
+  - **Note:** Do not set `q`. Use the `search` argument instead.
+- `onSuccess`: A function called on a successful response.
+- `onFailure`: A function called on a failed response.
+
+#### videoResultList `pixabay.videoResultList(search, options, onSuccess, onFailure)`
+Returns a `ResultList` instance using the authentication credentials and defaults previously set.
+
+- `search`: Array of search terms
+- `options`: Object of key-value pairs to set the query parameters sent with the request to Pixabay. See the [documentation][docs] for a list of supported query parameters.
   - **Note:** Do not set `q`. Use the `search` argument instead.
 - `onSuccess`: A function called on a successful response.
 - `onFailure`: A function called on a failed response.
