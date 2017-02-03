@@ -6,11 +6,16 @@ import ResultList from './result-list';
 const requiredDefaults = {
   page: 1,
   per_page: 20,
-  url: 'https://pixabay.com/api'
 };
 
 const pixabayjs = {
   _auth: {},
+
+  _makeConfig: function(url, opts) {
+    const urlObj = { url };
+    return assign({}, requiredDefaults, urlObj, this.defaults, this._auth,
+      opts);
+  },
 
   defaults: {},
 
@@ -18,8 +23,9 @@ const pixabayjs = {
     this._auth.key = key;
   },
 
-  resultList: function(search, opts, onSuccess, onFailure) {
-    const conf = assign({}, requiredDefaults, this.defaults, this._auth, opts);
+  imageResultList: function(search, opts, onSuccess, onFailure) {
+    const url = 'https://pixabay.com/api';
+    const conf = this._makeConfig(url, opts);
     return new ResultList(search, conf, onSuccess, onFailure);
   }
 };
