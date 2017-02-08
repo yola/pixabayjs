@@ -1,6 +1,6 @@
 # [Changelog](https://github.com/yola/pixabayjs/releases)
 
-## DEV 
+## 2.0.1 
 * Add CommonJS export
 
 ## 2.0.0 
