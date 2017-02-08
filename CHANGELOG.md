@@ -1,5 +1,8 @@
 # [Changelog](https://github.com/yola/pixabayjs/releases)
 
+## DEV 
+* Add CommonJS export
+
 ## 2.0.0 
 * Change `resultList` to `imageResultList` for images
 * Introduce `videoResultList` for videos

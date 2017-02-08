@@ -37,3 +37,4 @@ const pixabayjs = {
 };
 
 export default pixabayjs;
+module.exports = pixabayjs;
