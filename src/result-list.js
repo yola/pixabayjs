@@ -45,7 +45,7 @@ class ResultList {
     const perPage = this._options.per_page;
     const promise =  retrieve(this._search, this._options)
       .then(this._success(page, perPage))
-      .fail(this._failure(page, perPage));
+      .catch(this._failure(page, perPage));
 
     this._requestPromises[page] = promise;
     return promise;

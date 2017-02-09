@@ -46,7 +46,7 @@
     "lodash.assign": "~4.0.3",
     "lodash.omit": "~4.0.2",
     "q": "~2.0.3",
-    "superagent": "~1.7.2"
+    "superagent": "~1.2.0"
   },
   "browserify": {
     "transform": [
