@@ -18,7 +18,7 @@ class ResponseHandler {
   success() {
     const data = JSON.parse(this.res.xhr.responseText);
     data.page = this.page;
-    data.totalPages = Math.ceil(data.totalHits / this.perPage);
+    data.totalPages = Math.ceil(data.totalHits || data.total / this.perPage);
     data.error = null;
 
     return q(this.cb(data));
