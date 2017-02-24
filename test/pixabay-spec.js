@@ -2,8 +2,6 @@
 
 import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
-import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
 
 import pixabay from '../src/index';
 import ResultList from '../src/result-list';
@@ -12,7 +10,6 @@ import ResultList from '../src/result-list';
 const {expect} = chai;
 
 chai.use(chaiAsPromised);
-chai.use(sinonChai);
 
 const key = 'key';
 
@@ -43,9 +40,8 @@ describe('Pixabayjs', function() {
     });
 
     it('uses the image url', function() {
-      const spy = sinon.spy(client, '_makeConfig');
-      client.imageResultList(search);
-      expect(spy).to.be.calledWith('https://pixabay.com/api');
+      const resultList = client.imageResultList(search);
+      expect(resultList._options.url).to.eq('https://pixabay.com/api/');
     });
   });
 
@@ -57,9 +53,8 @@ describe('Pixabayjs', function() {
     });
 
     it('uses the video url', function() {
-      const spy = sinon.spy(client, '_makeConfig');
-      client.videoResultList(search);
-      expect(spy).to.be.calledWith('https://pixabay.com/api/videos');
+      const resultList = client.videoResultList(search);
+      expect(resultList._options.url).to.eq('https://pixabay.com/api/videos/');
     });
   });
 });
