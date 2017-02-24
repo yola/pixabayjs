@@ -1,21 +1,28 @@
 # [Changelog](https://github.com/yola/pixabayjs/releases)
 
+## DEV
+* Support 'url' as an option again
+
 ## 2.0.2
-* Lower Superagent dependency from 1.7.2 to 1.2.0
+* Lower Superagent dependency from 1.7.2 to 1.2.0 ([#46][46])
+[46]: https://github.com/yola/pixabayjs/pull/46
 
 ## 2.0.1
-* Add CommonJS export
+* Add CommonJS export ([#44][44])
+[44]: https://github.com/yola/pixabayjs/pull/44
 
 ## 2.0.0
-* Change `resultList` to `imageResultList` for images
+* Change `resultList` to `imageResultList` for images ([#42][42])
 * Introduce `videoResultList` for videos
+[42]: https://github.com/yola/pixabayjs/pull/42
 
 ## 1.0.2
-* Pin dependencies to minor version
+* Pin dependencies to minor version ([#39][39])
+[39]: https://github.com/yola/pixabayjs/pull/39
 
 ## 1.0.1
 * Update dependencies to latest version where applicable. ([#37][37])
-[37]: https://github.com/yola/pixabayjs/pull/33
+[37]: https://github.com/yola/pixabayjs/pull/37
 
 ## 1.0.0
 * Updated client to match pixabay's new API. ([#33][33])
