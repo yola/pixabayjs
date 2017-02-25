@@ -1,7 +1,10 @@
 # [Changelog](https://github.com/yola/pixabayjs/releases)
 
 ## DEV
-* Support 'url' as an option again
+* Fix pagination for the video endpoint ([#51][51])
+* Support 'url' as an option again ([#50][50])
+[50]: https://github.com/yola/pixabayjs/pull/50
+[51]: https://github.com/yola/pixabayjs/pull/51
 
 ## 2.0.2
 * Lower Superagent dependency from 1.7.2 to 1.2.0 ([#46][46])
