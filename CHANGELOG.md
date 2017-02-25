@@ -1,6 +1,6 @@
 # [Changelog](https://github.com/yola/pixabayjs/releases)
 
-## DEV
+## 2.0.3 
 * Fix pagination for the video endpoint ([#51][51])
 * Support 'url' as an option again ([#50][50])
 [50]: https://github.com/yola/pixabayjs/pull/50
