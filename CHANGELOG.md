@@ -1,6 +1,10 @@
 # [Changelog](https://github.com/yola/pixabayjs/releases)
 
-## 2.0.3 
+## Dev
+* Update karma dependency from 0.13.21 to 2.0.4
+* Update node version in `.travis.yml`
+
+## 2.0.3
 * Fix pagination for the video endpoint ([#51][51])
 * Support 'url' as an option again ([#50][50])
 
