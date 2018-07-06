@@ -1,6 +1,6 @@
 # [Changelog](https://github.com/yola/pixabayjs/releases)
 
-## Dev
+## 2.0.4
 * Update karma dependency from 0.13.21 to 2.0.4
 * Update node version in `.travis.yml`
 
