@@ -1,6 +1,6 @@
 {
   "name": "pixabayjs",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Pixabay API client wrapper",
   "main": "src/index.js",
   "scripts": {
@@ -27,7 +27,7 @@
     "chai-as-promised": "~5.2.0",
     "jsgreat": "~0.1.7",
     "karma": "~2.0.4",
-    "karma-browserify": "~5.0.1",
+    "karma-browserify": "~5.3.0",
     "karma-mocha": "~0.2.2",
     "karma-phantomjs-launcher": "~1.0.0",
     "karma-spec-reporter": "~0.0.24",
