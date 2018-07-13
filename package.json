@@ -32,7 +32,7 @@
     "karma-phantomjs-launcher": "~1.0.0",
     "karma-spec-reporter": "~0.0.24",
     "lodash.range": "~3.1.2",
-    "mocha": "~2.4.5",
+    "mocha": "~5.2.0",
     "mockagent": "~0.1.4",
     "phantomjs-prebuilt": "~2.1.4",
     "promisehelpers": "~0.0.3",
